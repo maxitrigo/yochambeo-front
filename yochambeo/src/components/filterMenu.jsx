@@ -15,16 +15,16 @@ export const FilterMenu = ({ setSortBy }) => {
   return (
     <div className="relative">
       <button
-        className="bg-purple-700 text-white font-bold py-2 px-4 rounded"
+        className=" text-purple-700 border border-purple-700 font-bold rounded-lg py-1 px-2"
         onClick={toggleMenu}
       >
         Filtros
       </button>
 
       {isOpen && (
-        <div className="absolute mt-2 bg-white border rounded shadow-lg w-48 right-0">
+        <div className="absolute mt-2 bg-white border  rounded shadow-lg w-48 right-0">
           <button
-            className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+            className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 border-b border-gray-300"
             onClick={() => handleSort("date")}
           >
             Ordenar por fecha

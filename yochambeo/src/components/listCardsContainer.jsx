@@ -9,6 +9,7 @@ export const ListCardsContainer = ({ searchTerm, sortBy }) => {
   const [jobs, setJobs] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  
 
   useEffect(() => {
     loadJobs(page);
@@ -63,7 +64,7 @@ export const ListCardsContainer = ({ searchTerm, sortBy }) => {
 
   return (
     <div className="w-full">
-      {filteredJobs.map(({ id, title, company, location, salary, imgUrl, description, requirements, createdAt, email, phone }) => (
+      {filteredJobs.map(({ id, title, company, location, salary, imgUrl, description, requirements, createdAt, email, phone, website }) => (
 
         <ListCards 
         key={id} 
@@ -76,6 +77,8 @@ export const ListCardsContainer = ({ searchTerm, sortBy }) => {
         requirements={requirements}
         email={email}
         phone={phone}
+        website={website}
+        imgUrl={imgUrl}
         />
 
       ))}
