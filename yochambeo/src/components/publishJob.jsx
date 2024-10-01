@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createJob } from '../routes/jobRoutes';
+import { initiatePayment } from '../routes/jobRoutes';
+import { set } from 'idb-keyval';
 
 export const PublishJob = () => {
 
@@ -18,50 +19,105 @@ export const PublishJob = () => {
         website: '',
     });
 
-    const [file, setFile] = useState(null);
-    const [imagePreview, setImagePreview] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    const [profileImage, setProfileImage] = useState(null);
+    const [instagramImage, setInstagramImage] = useState(null);
+    const [profilePreview, setProfilePreview] = useState(null);
+    const [instagramPreview, setInstagramPreview] = useState(null);
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
         setFormData({
             ...formData,
             [name]: value,
         });
     };
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setFile(file);
+    const handleProfileChange = (event) => {
+        const file = event.target.files[0];
+        setProfileImage(file);
         if (file) {
-            setImagePreview(URL.createObjectURL(file));
+            setProfilePreview(URL.createObjectURL(file));
+        }
+    };
+    
+    const handleInstagramChange = (event) => {
+        const file = event.target.files[0];
+        setInstagramImage(file);
+        if (file) {
+            setInstagramPreview(URL.createObjectURL(file));
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const formDataWithFile = new FormData();
-        formDataWithFile.append('title', formData.title);
-        formDataWithFile.append('description', formData.description);
-        formDataWithFile.append('location', formData.location);
-        formDataWithFile.append('company', formData.company);
-        formDataWithFile.append('salary', formData.salary);
-        formDataWithFile.append('requirements', formData.requirements);
-        formDataWithFile.append('phone', formData.phone);
-        formDataWithFile.append('email', formData.email);
-        formDataWithFile.append('website', formData.website);
-        if (file) {
-            formDataWithFile.append('file', file);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        const formDataWithFile = {
+            title: formData.title,
+            description: formData.description,
+            location: formData.location,
+            company: formData.company,
+            salary: formData.salary,
+            requirements: formData.requirements,
+            phone: formData.phone,
+            email: formData.email,
+            website: formData.website,
+        };
+    
+        // Guardar las imágenes en IndexedDB usando idb-keyval
+        if (profileImage) {
+            await set('profileImage', profileImage); // Guarda el profileImage
+            formDataWithFile.profileImage = profileImage.name; // O alguna referencia que necesites
         }
-        createJob(formDataWithFile);
-        navigate('/');
+    
+        if (instagramImage) {
+            await set('instagramImage', instagramImage); // Guarda el instagramImage
+            formDataWithFile.instagramImage = instagramImage.name; // O alguna referencia que necesites
+        }
+    
+        // try {
+        //     // Guardar los datos del formulario en localStorage
+        //     localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
+    
+        //     // Iniciar el proceso de pago
+        //     const paymentResponse = await initiatePayment();
+    
+        //     if (paymentResponse) {
+        //         // Redirigir al link de pago
+        //         window.location.href = paymentResponse;
+        //     } else {
+        //         console.error('Error al procesar el pago');
+        //     }
+
+        // } catch (error) {
+        //     console.error('Error al publicar el trabajo:', error);
+        // }
+
+        //sin proceso de pago
+        try {
+            // Guardar los datos del formulario en localStorage
+            localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
+            
+            // Redirigir a la página de éxito
+            window.location.href = '/success'; // Ajusta la ruta según sea necesario
+        } catch (error) {
+            console.error('Error al enviar el trabajo sin pagar:', error);
+        }
+
+
     };
+    
 
     return (
         <div className="flex flex-col items-center p-6">
+            
             <h1 className="text-4xl font-bold mb-4 text-purple-700">Publicar Trabajo</h1>
+
             <form onSubmit={handleSubmit} className="w-full max-w-md">
-            <div className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="image">
+
+                <div id="profile" className="mb-4">
+                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="profile">
                         Imagen de la empresa (opcional)
                     </label>
                     <div className="flex items-center justify-between">
@@ -69,23 +125,50 @@ export const PublishJob = () => {
                             Elegir Archivo
                             <input
                                 type="file"
-                                id="image"
-                                name="image"
-                                onChange={handleFileChange}
+                                id="profileImage"
+                                name="profileImage"
+                                onChange={handleProfileChange}
                                 className="hidden"
                             />
                         </label>
                         {/* Vista previa de la imagen */}
-                        {imagePreview && (
+                        {profilePreview && (
                             <img
-                                src={imagePreview}
+                                src={profilePreview}
                                 alt="Vista previa"
                                 className="w-24 h-24 rounded-full border-2 border-purple-700 ml-4"
                             />
                         )}
                     </div>
                 </div>
-                <div className="mb-4">
+
+                <div id="instagram" className="mb-4">
+                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="instagram">
+                        Imagen de instagram (opcional)
+                    </label>
+                    <div className="items-center justify-between">
+                        <label className="flex items-center justify-center bg-purple-700 text-white font-bold py-2 px-4 rounded-lg cursor-pointer">
+                            Elegir Archivo
+                            <input
+                                type="file"
+                                id="instagramImage"
+                                name="instagramImage"
+                                onChange={handleInstagramChange}
+                                className="hidden"
+                            />
+                        </label>
+                        {/* Vista previa de la imagen */}
+                        {instagramPreview && (
+                            <img
+                                src={instagramPreview}
+                                alt="Vista previa"
+                                className="w-full mt-4 border-2 border-purple-700"
+                            />
+                        )}
+                    </div>
+                </div>
+
+                <div id="title" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="title">
                         Posicion
                     </label>
@@ -101,7 +184,7 @@ export const PublishJob = () => {
                     />
                 </div>
 
-                <div className="mb-4">
+                <div id="description" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="description">
                         Descripción
                     </label>
@@ -132,7 +215,7 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                     ></textarea>
                 </div>
 
-                <div className="mb-4">
+                <div id="location" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="location">
                         Ubicación
                     </label>
@@ -148,7 +231,7 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                     />
                 </div>
 
-                <div className="mb-4">
+                <div id="company" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="company">
                         Empresa
                     </label>
@@ -164,7 +247,7 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                     />
                 </div>
 
-                <div className="mb-4">
+                <div id="salary" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="salary">
                         Salario
                     </label>
@@ -180,7 +263,7 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                     />
                 </div>
 
-                <div className="mb-4">
+                <div id="requirements" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="requirements">
                         Requisitos
                     </label>
@@ -200,9 +283,9 @@ Vehículo propio (preferible).'
                     ></textarea>
                 </div>
 
-                <div className="mb-4">
+                <div id="phone" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="phone">
-                        Teléfono
+                        Whatsapp (opcional)
                     </label>
                     <input
                         placeholder='Ej: 098765432 (solo numeros)'
@@ -215,7 +298,7 @@ Vehículo propio (preferible).'
                     />
                 </div>
 
-                <div className="mb-4">
+                <div id="email" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="email">
                         Correo Electrónico
                     </label>
@@ -231,9 +314,9 @@ Vehículo propio (preferible).'
                     />
                 </div>
 
-                <div className="mb-4">
+                <div id="website" className="mb-4">
                     <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="website">
-                        Sitio Web
+                        Sitio Web (opcional)
                     </label>
                     <input
                         placeholder='Ej: www.turboelectric.com'
@@ -246,17 +329,19 @@ Vehículo propio (preferible).'
                     />
                 </div>
 
-                <div className='flex justify-between'>
+                <div id="submit" className='flex justify-between'>
                 <button
                     type="submit"
                     className="bg-purple-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
                 >
-                    Publicar Trabajo
+                    Pagar Y Publicar Trabajo
                 </button>
 
                 <Link to="/" className='bg-purple-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline'>Volver</Link>
                 </div>
             </form>
+            
+
         </div>
     );
 };

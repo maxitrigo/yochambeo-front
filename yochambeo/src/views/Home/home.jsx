@@ -15,7 +15,7 @@ export const Home = () => {
                 <p className="text-lg">Aquí podrás encontrar y publicar trabajos fácilmente.</p>
                 </div>
                 <div className="flex flex-col justify-between">
-                    <Link to="/publish" className="text-white bg-purple-700 px-4 py-2 rounded-md font-bold mt-2">Publicar</Link>
+                    <Link to="/publish" className="text-white bg-purple-700 px-4 py-2 rounded-md font-bold mt-2 mb-4 ml-4">Publicar</Link>
                     <div className="flex justify-end mb-4 z-20">
                         <FilterMenu className="" setSortBy={setSortBy} />
                     </div>
