@@ -40,10 +40,14 @@ jobs:
             echo "Iniciando sesión en EC2..."
 
             echo "Bajando y eliminando todos los contenedores..."
-            docker rm -f $(docker ps -aq) || true  
+            if [ "$(docker ps -aq)" ]; then
+              docker rm -f $(docker ps -aq)
+            fi
 
             echo "Bajando y eliminando todas las imágenes de Docker..."
-            docker rmi $(docker images -q) || true  
+            if [ "$(docker images -q)" ]; then
+              docker rmi -f $(docker images -q)
+            fi
             
             docker pull ${{ secrets.DOCKER_USERNAME }}/yochambeo-frontend:latest
             docker run -d -p 80:80 --name yochambeo-frontend ${{ secrets.DOCKER_USERNAME }}/yochambeo-frontend:latest
