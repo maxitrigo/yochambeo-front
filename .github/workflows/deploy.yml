@@ -49,7 +49,7 @@ jobs:
               docker rmi -f $(docker images -q)
             fi
             
-            docker pull ${{ secrets.DOCKER_USERNAME }}/yochambeo-frontend:latest
-            docker run -d -p 80:80 --name yochambeo-frontend ${{ secrets.DOCKER_USERNAME }}/yochambeo-frontend:latest
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-frontend:latest
+            docker run -d -p 80:80 --name yochambeo-frontend ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-frontend:latest
 
           EOF
