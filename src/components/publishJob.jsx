@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { initiatePayment } from '../routes/jobRoutes';
 import { set } from 'idb-keyval';
 
+
 export const PublishJob = () => {
 
     const navigate = useNavigate();
@@ -100,7 +101,7 @@ export const PublishJob = () => {
             localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
             
             // Redirigir a la página de éxito
-            window.location.href = '/success'; // Ajusta la ruta según sea necesario
+            navigate('/success'); // Ajusta la ruta según sea necesario
         } catch (error) {
             console.error('Error al enviar el trabajo sin pagar:', error);
         }
