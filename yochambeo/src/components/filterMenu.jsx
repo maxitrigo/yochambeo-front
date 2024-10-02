@@ -18,7 +18,7 @@ export const FilterMenu = ({ setSortBy }) => {
         className=" text-purple-700 border border-purple-700 font-bold rounded-lg py-1 px-2"
         onClick={toggleMenu}
       >
-        Filtros.
+        Filtros
       </button>
 
       {isOpen && (
