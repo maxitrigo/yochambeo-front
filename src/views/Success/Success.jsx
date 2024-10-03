@@ -41,7 +41,7 @@ export const Success = ({ createJob }) => {
                     // 2. Redirigir a la página principal después de 5 segundos
                     setTimeout(() => {
                         navigate('/');
-                    }, 5000);
+                    }, 3000);
                 })
                 .catch((error) => {
                     console.error('Error al enviar el trabajo:', error);
