@@ -1,6 +1,6 @@
-import { AiOutlineMail } from 'react-icons/ai'; // Icono de correo
+import { MdAlternateEmail } from 'react-icons/md'; // Icono de correo
 import { FaWhatsapp } from 'react-icons/fa'; // Icono de WhatsApp
-import { FaGlobe } from 'react-icons/fa'; // Icono de Globe
+import { TbWorldWww } from 'react-icons/tb'; // Icono de Globe
 
 const ContactButtons = ({ email, phone, website, title }) => {
 
@@ -8,19 +8,19 @@ const ContactButtons = ({ email, phone, website, title }) => {
     const formattedPhone = typeof phone === 'string' ? areaCode + phone.replace(/^0/, '').replace(/\D/g, '') : '';
 
     return (
-        <div className="mt-4 flex space-x-2 items-center justify-center mb-2">
+        <div className=" flex space-x-6 items-center justify-center mb-2 mt-4">
             {email && (
                 <a
                     href={`mailto:${email}?subject=Interés en el trabajo: ${title}`}
-                    className="items-center text-red-500 font-semibold py-2 px-2"
+                    className="text-red-500"
                 >
-                    <AiOutlineMail className="text-4xl" />
+                    <MdAlternateEmail className="text-4xl" />
                 </a>
             )}
             {phone && (
                 <a
                     href={`https://wa.me/${formattedPhone}?text=Hola, estoy interesado en el trabajo de: ${title}`}
-                    className="items-center text-green-400 font-semibold py-2 px-2"
+                    className="text-green-400"
                 >
                     <FaWhatsapp className="text-4xl" />
                 </a>
@@ -28,9 +28,9 @@ const ContactButtons = ({ email, phone, website, title }) => {
             {website && (
                 <a
                     href={`http://${website}`}
-                    className="items-center text-blue-500 font-semibold py-2 px-2"
+                    className=""
                 >
-                    <FaGlobe className="text-3xl" />
+                    <TbWorldWww className="text-4xl" />
                 </a>
             )}
         </div>
