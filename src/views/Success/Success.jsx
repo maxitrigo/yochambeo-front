@@ -38,7 +38,7 @@ export const Success = ({ createJob }) => {
             // 1. Llamar a sendFilesToCreateJob sin comprobar el estado del pago
             sendFilesToCreateJob(createJob)
                 .then(() => {
-                    // 2. Redirigir a la página principal después de 5 segundos
+                    // 2. Redirigir a la página principal después de 3 segundos
                     setTimeout(() => {
                         navigate('/');
                     }, 3000);
