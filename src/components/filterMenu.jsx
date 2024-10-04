@@ -15,7 +15,7 @@ export const FilterMenu = ({ setSortBy }) => {
   return (
     <div className="relative">
       <button
-        className=" text-purple-700 border border-purple-700 font-bold rounded-lg py-1 px-2"
+        className=" text-gray-700 border border-gray-700 font-semibold rounded-lg py-1 px-2"
         onClick={toggleMenu}
       >
         Filtros

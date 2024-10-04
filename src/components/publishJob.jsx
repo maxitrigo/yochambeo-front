@@ -111,18 +111,20 @@ export const PublishJob = () => {
     
 
     return (
-        <div className="flex flex-col items-center p-6">
-            
-            <h1 className="text-4xl font-bold mb-4 text-purple-700">Publicar Trabajo</h1>
+        <div className="flex flex-col items-center p-4">
+            <div className='flex flex-row justify-between w-full mb-8'>
+            <h1 className="text-2xl font-bold">Publicar Trabajo</h1>
+            <Link to="/" className='bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline'>Volver</Link>
+            </div>
 
             <form onSubmit={handleSubmit} className="w-full max-w-md">
 
-                <div id="profile" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="profile">
-                        Imagen de la empresa (opcional)
-                    </label>
-                    <div className="flex items-center justify-between">
-                        <label className="flex items-center justify-center bg-purple-700 text-white font-bold py-2 px-4 rounded-lg cursor-pointer">
+                <div id="profile" className="mb-4 flex flex-row justify-between">
+                    <div className="flex flex-col items-start">
+                        <label className="block text-sm font-bold mb-2" htmlFor="profile">
+                            Imagen de la empresa (opcional)
+                        </label>
+                        <label className="flex items-center justify-center bg-black text-white font-bold py-2 px-4 rounded-2xl cursor-pointer">
                             Elegir Archivo
                             <input
                                 type="file"
@@ -132,23 +134,23 @@ export const PublishJob = () => {
                                 className="hidden"
                             />
                         </label>
+                    </div>
                         {/* Vista previa de la imagen */}
                         {profilePreview && (
                             <img
                                 src={profilePreview}
                                 alt="Vista previa"
-                                className="w-24 h-24 rounded-full border-2 border-purple-700 ml-4"
+                                className="w-24 h-24 rounded-full border border ml-4"
                             />
                         )}
-                    </div>
                 </div>
 
                 <div id="instagram" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="instagram">
+                    <label className="block text-sm font-bold mb-2" htmlFor="instagram">
                         Imagen de instagram (opcional)
                     </label>
                     <div className="items-center justify-between">
-                        <label className="flex items-center justify-center bg-purple-700 text-white font-bold py-2 px-4 rounded-lg cursor-pointer">
+                        <label className="flex items-center justify-center bg-black text-white font-bold py-2 px-4 rounded-2xl cursor-pointer">
                             Elegir Archivo
                             <input
                                 type="file"
@@ -163,14 +165,14 @@ export const PublishJob = () => {
                             <img
                                 src={instagramPreview}
                                 alt="Vista previa"
-                                className="w-full mt-4 border-2 border-purple-700"
+                                className="w-full mt-4"
                             />
                         )}
                     </div>
                 </div>
 
                 <div id="title" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="title">
+                    <label className="block text-sm font-bold mb-2" htmlFor="title">
                         Posicion
                     </label>
                     <input
@@ -180,13 +182,13 @@ export const PublishJob = () => {
                         name="title"
                         value={formData.title}
                         onChange={handleChange}
-                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     />
                 </div>
 
                 <div id="description" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="description">
+                    <label className="block text-sm font-bold mb-2" htmlFor="description">
                         Descripción
                     </label>
                     <textarea
@@ -210,14 +212,14 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        className=" appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className=" appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         rows="20"
                         required
                     ></textarea>
                 </div>
 
                 <div id="location" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="location">
+                    <label className="block text-sm font-bold mb-2" htmlFor="location">
                         Ubicación
                     </label>
                     <input
@@ -227,13 +229,13 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                         name="location"
                         value={formData.location}
                         onChange={handleChange}
-                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     />
                 </div>
 
                 <div id="company" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="company">
+                    <label className="block text-sm font-bold mb-2" htmlFor="company">
                         Empresa
                     </label>
                     <input
@@ -243,13 +245,13 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     />
                 </div>
 
                 <div id="salary" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="salary">
+                    <label className="block text-sm font-bold mb-2" htmlFor="salary">
                         Salario
                     </label>
                     <input
@@ -259,13 +261,13 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                         name="salary"
                         value={formData.salary}
                         onChange={handleChange}
-                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     />
                 </div>
 
                 <div id="requirements" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="requirements">
+                    <label className="block text-sm font-bold mb-2" htmlFor="requirements">
                         Requisitos
                     </label>
                     <textarea
@@ -278,14 +280,14 @@ Vehículo propio (preferible).'
                         name="requirements"
                         value={formData.requirements}
                         onChange={handleChange}
-                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         rows="10"
                         required
                     ></textarea>
                 </div>
 
                 <div id="phone" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="phone">
+                    <label className="block text-sm font-bold mb-2" htmlFor="phone">
                         Whatsapp (opcional)
                     </label>
                     <input
@@ -295,12 +297,12 @@ Vehículo propio (preferible).'
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
                 </div>
 
                 <div id="email" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="email">
+                    <label className="block text-sm font-bold mb-2" htmlFor="email">
                         Correo Electrónico
                     </label>
                     <input
@@ -310,13 +312,13 @@ Vehículo propio (preferible).'
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required
                     />
                 </div>
 
                 <div id="website" className="mb-4">
-                    <label className="block text-purple-700 text-sm font-bold mb-2" htmlFor="website">
+                    <label className="block text-sm font-bold mb-2" htmlFor="website">
                         Sitio Web (opcional)
                     </label>
                     <input
@@ -326,19 +328,17 @@ Vehículo propio (preferible).'
                         name="website"
                         value={formData.website}
                         onChange={handleChange}
-                        className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
                 </div>
 
-                <div id="submit" className='flex justify-between'>
+                <div id="submit" className='flex justify-center p-6'>
                 <button
                     type="submit"
-                    className="bg-purple-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+                    className="bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
                 >
                     Publicar Trabajo
                 </button>
-
-                <Link to="/" className='bg-purple-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline'>Volver</Link>
                 </div>
             </form>
             

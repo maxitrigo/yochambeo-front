@@ -12,7 +12,7 @@ export const SearchBox = ({ searchTerm, setSearchTerm }) => {
         value={searchTerm}
         onChange={handleInputChange}
         placeholder="Busca, por puesto, lugar, empresa."
-        className="border rounded-md w-3/4 m-2 p-2 mt-4 mb-4 bg-gray-200"
+        className="border rounded-xl w-full m-2 p-2 mt-4 mb-4"
       />
     </div>
   );
