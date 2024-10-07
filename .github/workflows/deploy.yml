@@ -42,16 +42,14 @@ jobs:
             echo "ir a la carpeta raiz"
             cd yochambeofront
 
-            echo "deteniendo dockers activos"
-            docker-compose down
+            echo "Deteniendo y eliminando todos los contenedores existentes..."
+            docker stop $(docker ps -aq) || true
+            docker rm $(docker ps -aq) || true
+            
+            echo "Iniciando nuevo contenedor..."
+            docker run -d --name yochambeo-frontend -p 80:80 ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-front:latest
 
-            echo "bajando la imagen de docker"
-            docker-compose pull
-
-            echo "reiniciando dockers"
-            docker-compose up -d
-
-            echo "Limpiando imágenes no utilizadas..."
-            docker image prune -f  # Elimina imágenes no utilizadas
+            echo "Eliminando imágenes no utilizadas..."
+            docker image prune -a -f
 
           EOF

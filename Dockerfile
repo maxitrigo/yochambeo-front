@@ -1,5 +1,5 @@
-# Usar una imagen base
-FROM node:20 as build
+# Usar una imagen base para construir la aplicación
+FROM node:20 AS build
 
 # Establecer el directorio de trabajo
 WORKDIR /app
@@ -17,9 +17,13 @@ COPY . .
 RUN npm run build
 
 # Usar una imagen de Nginx para servir la aplicación
-FROM nginx:alpine
+FROM nginx:latest
+
+# Copiar los archivos de la build de Vite al directorio de Nginx
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Exponer el puerto
+# Exponer el puerto por defecto de Nginx
 EXPOSE 80
+
+# Comando para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
