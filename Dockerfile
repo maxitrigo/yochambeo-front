@@ -1,15 +1,23 @@
-# Usa una imagen de Node.js para construir el proyecto
-FROM node:18 AS build
+# Usar una imagen base
+FROM node:18 as build
 
-# Establece el directorio de trabajo
+# Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copia los archivos del proyecto
-COPY package*.json ./
+# Copiar los archivos del proyecto
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copia el resto de los archivos
+# Copiar el resto del código
 COPY . .
 
-# Construye la aplicación
+# Construir la aplicación
 RUN npm run build
+
+# Usar una imagen de Nginx para servir la aplicación
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Exponer el puerto
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
