@@ -8,9 +8,14 @@ export const getAllJobs = async (page = 1) => {
   return response.data;
 };
 
-export const createJob = async (formData) => {
+export const createJob = async (formData, token) => {
     try {
-        const response = await axios.post(`${API_URL}/jobs`, formData);
+        // Llamada a la API para crear un trabajo con el token en el header
+        const response = await axios.post(`${API_URL}/jobs`, formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         //Manejo de respuesta exitosa
         console.log('Trabajo creado exitosamente:', response.data);
         // Redireccionar o hacer algo más
@@ -35,6 +40,11 @@ export const initiatePayment = async () => {
   const response = await fetch(`${API_URL}/mercadopago/create-preference`, { method: 'POST'});
   const data = await response.json();
   console.log(data);
+
+  // Guardar el token en localStorage
+  localStorage.setItem('token', data.token);
+
+  // Devolver ruta para redireccionar a Mercado Pago
   return data.init_point;
 }
 

@@ -1,7 +1,7 @@
 import { get } from 'idb-keyval';
 import { createJob } from '../routes/jobRoutes';
 
-export const sendFilesToCreateJob = async () => {
+export const sendFilesToCreateJob = async (token) => {
     // 1. Recuperar los datos del formulario de localStorage
     const storedFormData = JSON.parse(localStorage.getItem('formDataWithFile'));
     
@@ -28,9 +28,9 @@ export const sendFilesToCreateJob = async () => {
         formDataWithFile.append('files', instagramImage); // Asegúrate de que instagramImage sea un archivo
     }
 
-    // 6. Llamar a la función createJob con el FormData
+    // 6. Llamar a la función createJob con el FormData y el token
     try {
-        await createJob(formDataWithFile);
+        await createJob(formDataWithFile, token);
         console.log('Trabajo creado con éxito');
     } catch (error) {
         console.error('Error al crear el trabajo:', error);

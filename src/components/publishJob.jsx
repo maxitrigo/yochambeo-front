@@ -77,34 +77,34 @@ export const PublishJob = () => {
             formDataWithFile.instagramImage = instagramImage.name; // O alguna referencia que necesites
         }
     
-        // try {
-        //     // Guardar los datos del formulario en localStorage
-        //     localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
-    
-        //     // Iniciar el proceso de pago
-        //     const paymentResponse = await initiatePayment();
-    
-        //     if (paymentResponse) {
-        //         // Redirigir al link de pago
-        //         window.location.href = paymentResponse;
-        //     } else {
-        //         console.error('Error al procesar el pago');
-        //     }
-
-        // } catch (error) {
-        //     console.error('Error al publicar el trabajo:', error);
-        // }
-
-        //sin proceso de pago
         try {
             // Guardar los datos del formulario en localStorage
             localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
-            
-            // Redirigir a la página de éxito
-            navigate('/success'); // Ajusta la ruta según sea necesario
+    
+            // Iniciar el proceso de pago
+            const paymentResponse = await initiatePayment();
+    
+            if (paymentResponse) {
+                // Redirigir al link de pago
+                window.location.href = paymentResponse;
+            } else {
+                console.error('Error al procesar el pago');
+            }
+
         } catch (error) {
-            console.error('Error al enviar el trabajo sin pagar:', error);
+            console.error('Error al publicar el trabajo:', error);
         }
+
+        // //sin proceso de pago
+        // try {
+        //     // Guardar los datos del formulario en localStorage
+        //     localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
+            
+        //     // Redirigir a la página de éxito
+        //     navigate('/success'); // Ajusta la ruta según sea necesario
+        // } catch (error) {
+        //     console.error('Error al enviar el trabajo sin pagar:', error);
+        // }
 
 
     };
