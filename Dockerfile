@@ -1,11 +1,13 @@
 # Usar una imagen base
-FROM node:18 as build
+FROM node:20 as build
 
 # Establecer el directorio de trabajo
 WORKDIR /app
 
 # Copiar los archivos del proyecto
-COPY package.json package-lock.json ./
+COPY package*.json ./
+
+# Instalar las dependencias
 RUN npm install
 
 # Copiar el resto del código

@@ -28,7 +28,7 @@ export const sendFilesToCreateJob = async (token) => {
         formDataWithFile.append('files', instagramImage); // Asegúrate de que instagramImage sea un archivo
     }
 
-    // 6. Llamar a la función createJob con el FormData y el token
+    // 6. Llamar a la función createJob con el FormData y el token.
     try {
         await createJob(formDataWithFile, token);
         console.log('Trabajo creado con éxito');
