@@ -13,15 +13,3 @@ COPY . .
 
 # Construye la aplicación
 RUN npm run build
-
-# Usa una imagen ligera de Nginx para servir los archivos estáticos
-FROM nginx:alpine
-
-# Copia los archivos construidos desde la fase anterior
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Exponer el puerto 80 para el servidor Nginx
-EXPOSE 80
-
-# Comando para iniciar Nginx
-CMD ["nginx", "-g", "daemon off;"]
