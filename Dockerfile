@@ -12,6 +12,3 @@ COPY . .
 # Construye la aplicación
 RUN npm run build
 
-# Usa una imagen ligera para servir
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
