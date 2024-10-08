@@ -1,4 +1,4 @@
-name: Deploy FrontEnd
+name: Deploy FrontEnd (Apache SPA)
 
 on:
   push:
@@ -46,10 +46,21 @@ jobs:
             docker stop $(docker ps -aq) || true
             docker rm $(docker ps -aq) || true
             
-            echo "Iniciando nuevo contenedor..."
-            docker run -d --name yochambeo-frontend -p 80:80 --restart always ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-front:latest
+            echo "Configurando Apache para SPA..."
+            echo '
+            <Directory "/usr/local/apache2/htdocs">
+              Options Indexes FollowSymLinks
+              AllowOverride All
+              Require all granted
+            </Directory>
+            RewriteEngine On
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^ /index.html [L]
+            ' > ./my-httpd.conf
+
+            echo "Corriendo contenedor Apache con config SPA..."
+            docker run -d --name apache-front -p 8080:80 -v $(pwd)/my-httpd.conf:/usr/local/apache2/conf/httpd.conf ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-front:latest
 
             echo "Eliminando imágenes no utilizadas..."
             docker image prune -a -f
-
           EOF
