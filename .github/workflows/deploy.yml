@@ -29,26 +29,32 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-front:latest
 
-      # - name: Set up SSH key
-      #   run: |
-      #     echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > /tmp/ec2_key.pem
-      #     chmod 600 /tmp/ec2_key.pem
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > /tmp/ec2_key.pem
+          chmod 600 /tmp/ec2_key.pem
 
-      # - name: Pull Frontend Image
-      #   run: |
-      #     ssh -i /tmp/ec2_key.pem -o StrictHostKeyChecking=no ubuntu@ec2-18-225-9-140.us-east-2.compute.amazonaws.com << 'EOF'
+      - name: Pull Frontend Image
+        run: |
+          ssh -i /tmp/ec2_key.pem -o StrictHostKeyChecking=no ubuntu@ec2-18-225-9-140.us-east-2.compute.amazonaws.com << 'EOF'
             
-      #       echo "ir a carpeta raiz"
-      #       cd yochambeo
+            echo "ir a carpeta raiz"
+            cd yochambeo
+
+            echo "parar todos los contenedores"
+            docker stop $(docker ps -aq)
+
+            echo "borrar todos los contenedores"
+            docker rm $(docker ps -aq)
             
-      #       echo "Pulling latest frontend image"
-      #       docker pull maxitrigo/yochambeo-front:latest
+            echo "pull image"
+            docker pull maxitrigo/yochambeo-front:latest
 
-      #       echo "Stopping existing frontend container"
-      #       docker stop yochambeo-front || true
-      #       docker rm yochambeo-front || true
+            echo "run image"
+            docker run -d -p 8080:80 maxitrigo/yochambeo-front:latest
 
-      #       echo "Starting new frontend container"
-      #       docker run -d --name yochambeo-front --network=host maxitrigo/yochambeo-front
-      #     EOF
+            echo "borrar imagenes no usadas"
+            docker image prune -a -f
+
+          EOF
           
