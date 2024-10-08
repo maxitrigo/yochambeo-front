@@ -19,11 +19,11 @@ RUN npm run build
 # Usa una imagen base de Apache
 FROM httpd:alpine
 
-# Copia el contenido de la carpeta dist al contenedor
-COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
-
 # Copia el archivo .htaccess al contenedor
 COPY ./.htaccess /usr/local/apache2/htdocs/
+
+# Copia el contenido de la carpeta dist al contenedor
+COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
 
 # Expone el puerto 80
 EXPOSE 80
