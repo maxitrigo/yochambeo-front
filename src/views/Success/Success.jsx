@@ -35,12 +35,12 @@ export const Success = () => {
             // Redirigir inmediatamente si el pago no fue aprobado
             navigate('/');
         }
-    }, [location, navigate, createJob]);
+    }, [location, navigate]);
 
         // // sin proceso de pago
         // useEffect(() => {
         //     // 1. Llamar a sendFilesToCreateJob sin comprobar el estado del pago
-        //     sendFilesToCreateJob(createJob)
+        //     sendFilesToCreateJob()
         //         .then(() => {
         //             // 2. Redirigir a la página principal después de 3 segundos
         //             setTimeout(() => {
@@ -50,7 +50,7 @@ export const Success = () => {
         //         .catch((error) => {
         //             console.error('Error al enviar el trabajo:', error);
         //         });
-        // }, [navigate, createJob]);
+        // }, [navigate]);
 
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
