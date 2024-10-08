@@ -23,7 +23,10 @@ FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copiar el archivo de configuración de Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+# Verificar que el archivo se haya copiado correctamente
+RUN ls -l /etc/nginx/conf.d/
 
 # Asegurarse de que Nginx esté ejecutándose en primer plano
 CMD ["nginx", "-g", "daemon off;"]
