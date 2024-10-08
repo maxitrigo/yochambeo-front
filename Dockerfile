@@ -17,12 +17,15 @@ COPY . .
 RUN npm run build
 
 # Usa una imagen base de Apache
-FROM httpd:2.4
+FROM httpd:2.4 as production-stage
 
-COPY ./apache.conf /usr/local/apache2/conf/httpd.conf
+COPY apache-config.conf /usr/local/apache2/conf/httpd.conf
+
+COPY .htaccess /usr/local/apache2/htdocs/
 
 # Copia el contenido de la carpeta dist al contenedor
-COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
+COPY --from=build-stage /app/dist/ /usr/local/apache2/htdocs/
 
 # Expone el puerto 80
 EXPOSE 80
+
