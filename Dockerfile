@@ -22,6 +22,9 @@ FROM httpd:alpine
 # Copia el archivo .htaccess al contenedor
 COPY ./.htaccess /usr/local/apache2/htdocs/
 
+# Copia la configuración personalizada de Apache
+COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
+
 # Copia el contenido de la carpeta dist al contenedor
 COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
 
