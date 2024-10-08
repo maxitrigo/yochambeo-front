@@ -16,15 +16,15 @@ COPY . .
 # Construir la aplicación
 RUN npm run build
 
-# Usa una imagen base de Apache
-FROM httpd:2.4 as production-stage
+# Production stage ESTO VA EN EL DOCKERFILE
+FROM nginx:alpine
 
-COPY apache-config.conf /usr/local/apache2/conf/httpd.conf
+#COPIA LA CARPETA DIST EN NGINX
+COPY --from=build /app/dist /usr/share/nginx/html
 
-COPY .htaccess /usr/local/apache2/htdocs/
+#COPIA LA CONFIGURACION DEL BLOQUE DE ARRIBA EN LA DE NGINX
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copia el contenido de la carpeta dist al contenedor
-COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
-
-# Expone el puerto 80
 EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
