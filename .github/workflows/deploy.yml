@@ -1,4 +1,4 @@
-name: Deploy FrontEnd (Apache SPA)
+name: Deploy FrontEnd
 
 on:
   push:
@@ -38,29 +38,44 @@ jobs:
         run: |
           ssh -i /tmp/ec2_key.pem -o StrictHostKeyChecking=no ubuntu@ec2-18-225-9-140.us-east-2.compute.amazonaws.com << 'EOF'
             echo "Iniciando sesión en EC2..."
-
-            echo "ir a la carpeta raiz"
+            
+            echo "Ir a la carpeta raíz"
             cd yochambeo
 
             echo "Deteniendo y eliminando todos los contenedores existentes..."
             docker stop $(docker ps -aq) || true
             docker rm $(docker ps -aq) || true
             
-            echo "Configurando Apache para SPA..."
-            echo '
-            <Directory "/usr/local/apache2/htdocs">
-              Options Indexes FollowSymLinks
-              AllowOverride All
-              Require all granted
-            </Directory>
-            RewriteEngine On
-            RewriteCond %{REQUEST_FILENAME} !-f
-            RewriteRule ^ /index.html [L]
-            ' > ./my-httpd.conf
-
-            echo "Corriendo contenedor Apache con config SPA..."
-            docker run -d --name apache-front -p 8080:80 -v $(pwd)/my-httpd.conf:/usr/local/apache2/conf/httpd.conf ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-front:latest
-
             echo "Eliminando imágenes no utilizadas..."
             docker image prune -a -f
-          EOF
+            
+            # Pull tu imagen de DockerHub
+            echo "Pull maxitrigo/yochambeo-front"
+            docker pull maxitrigo/yochambeo-front
+            
+            # Pull Apache image oficial
+            echo "Pull Apache image oficial"
+            docker pull httpd:latest
+            
+            # Crear contenedor para el front
+            echo "Iniciando contenedor del front"
+            docker run -d --name front -p 3000:80 maxitrigo/yochambeo-front
+
+            # Crear un contenedor para Apache
+            echo "Iniciando contenedor de Apache"
+            docker run -d --name apache-front -p 8080:80 httpd:latest
+            
+            # Configuración de Apache para apuntar al front
+            echo "Configurando Apache para apuntar al front"
+            docker exec -it apache-front bash -c "echo '<VirtualHost *:80>
+            ProxyPass / http://front:80/
+                ProxyPassReverse / http://front:80/
+                </VirtualHost>' > /usr/local/apache2/conf/httpd.conf"
+                
+                # Habilitar el módulo proxy en Apache
+                echo "Habilitando módulo proxy en Apache"
+                docker exec -it apache-front bash -c "echo 'LoadModule proxy_module modules/mod_proxy.so' >> /usr/local/apache2/conf/httpd.conf"
+                docker exec -it apache-front bash -c "echo 'LoadModule proxy_http_module modules/mod_proxy_http.so' >> /usr/local/apache2/conf/httpd.conf"
+                
+                EOF
+                
