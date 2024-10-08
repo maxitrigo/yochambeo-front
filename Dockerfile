@@ -23,7 +23,7 @@ FROM nginx:stable-alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copiar el archivo de configuración de Nginx
-COPY ./nginx.conf /etc/nginx
+COPY ./nginx.conf /etc/nginx/conf.d
 
 # Verificar que el archivo se haya copiado correctamente
 RUN ls -l /etc/nginx/conf.d/
