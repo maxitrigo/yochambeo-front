@@ -19,9 +19,6 @@ RUN npm run build
 # Usa una imagen base de Apache
 FROM httpd:latest
 
-# Copia la configuración personalizada de Apache
-COPY ./apache.conf /usr/local/apache2/conf/httpd.conf
-
 # Copia el contenido de la carpeta dist al contenedor
 COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
 
