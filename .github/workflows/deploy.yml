@@ -51,25 +51,10 @@ jobs:
             docker pull maxitrigo/yochambeo-front:latest
 
             echo "run image"
-            docker run -d -p 80:80 -p 443:443 \
-              -v /home/certbot:/etc/letsencrypt \
-              -v /home/certbot/www:/var/www/certbot \
-              maxitrigo/yochambeo-front:latest
-
-            echo "Asegurar el directorio certbot"
-            mkdir -p /home/certbot
-            
-            echo "Ejecutar Certbot"
-            docker run --rm -v /home/certbot:/etc/letsencrypt -v /home/certbot/www:/var/www/certbot \
-              certbot/certbot certonly --webroot -w /var/www/certbot \
-              -d yochambeo.com -d www.yochambeo.com --email maxitrigo@gmail.com --agree-tos --no-eff-email
-            
-            echo "Recargar Nginx para aplicar el nuevo certificado SSL"
-            docker exec yochambeo nginx -s reload
+            docker run -d -p 80:80 -p 443:443 --name yochambeo -v /etc/letsencrypt:/etc/letsencrypt maxitrigo/yochambeo-front:latest
 
             echo "borrar imagenes no usadas"
             docker image prune -a -f
 
           EOF
-
           
