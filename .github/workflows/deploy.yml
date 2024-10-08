@@ -29,59 +29,26 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-front:latest
 
-      - name: Set up SSH key
-        run: |
-          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > /tmp/ec2_key.pem
-          chmod 600 /tmp/ec2_key.pem
+      # - name: Set up SSH key
+      #   run: |
+      #     echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > /tmp/ec2_key.pem
+      #     chmod 600 /tmp/ec2_key.pem
 
-      - name: Deploy to EC2
-        run: |
-          ssh -i /tmp/ec2_key.pem -o StrictHostKeyChecking=no ubuntu@ec2-18-225-9-140.us-east-2.compute.amazonaws.com << 'EOF'
-            echo "Iniciando sesión en EC2..."
+      # - name: Pull Frontend Image
+      #   run: |
+      #     ssh -i /tmp/ec2_key.pem -o StrictHostKeyChecking=no ubuntu@ec2-18-225-9-140.us-east-2.compute.amazonaws.com << 'EOF'
             
-            echo "Ir a la carpeta raíz"
-            cd yochambeo || exit 1
-      
-            echo "Deteniendo y eliminando todos los contenedores existentes..."
-            docker stop $(docker ps -aq) || true
-            docker rm $(docker ps -aq) || true
-      
-            echo "Eliminando imágenes no utilizadas..."
-            docker image prune -a -f
-      
-            # Pull tu imagen de DockerHub
-            echo "Pull maxitrigo/yochambeo-front"
-            docker pull maxitrigo/yochambeo-front
-      
-            # Pull Apache image oficial
-            echo "Pull Apache image oficial"
-            docker pull httpd:latest
-      
-            # Crear un contenedor con Apache
-            echo "Run Apache"
-            docker run -d --name apache-front -p 8080:80 httpd:latest
-      
-            echo "Habilitando módulo proxy en Apache"
-            docker exec apache-front bash -c "apt-get update && apt-get install -y apache2-utils && a2enmod proxy && a2enmod proxy_http"
-      
-            echo "Configurando el archivo de configuración de Apache"
-            echo '
-            <VirtualHost *:80>
-                DocumentRoot /usr/local/apache2/htdocs
-                ProxyPass / http://maxitrigo/yochambeo-front:80/
-                ProxyPassReverse / http://maxitrigo/yochambeo-front:80/
-                # Manejo de rutas para SPA
-                RewriteEngine On
-                RewriteBase /
-                RewriteRule ^index\.html$ - [L]
-                RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteCond %{REQUEST_FILENAME} !-d
-                RewriteRule . /index.html [L]
-            </VirtualHost>
-            ' > /usr/local/apache2/conf/httpd.conf
-      
-            echo "Reiniciando Apache"
-            docker restart apache-front
-      
-          EOF
-        
+      #       echo "ir a carpeta raiz"
+      #       cd yochambeo
+            
+      #       echo "Pulling latest frontend image"
+      #       docker pull maxitrigo/yochambeo-front:latest
+
+      #       echo "Stopping existing frontend container"
+      #       docker stop yochambeo-front || true
+      #       docker rm yochambeo-front || true
+
+      #       echo "Starting new frontend container"
+      #       docker run -d --name yochambeo-front --network=host maxitrigo/yochambeo-front
+      #     EOF
+          
