@@ -25,9 +25,6 @@ COPY --from=build /app/dist /usr/share/nginx/html
 #COPIA LA CONFIGURACION DEL BLOQUE DE ARRIBA EN LA DE NGINX
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Create directory for certbot
-RUN mkdir -p /var/www/certbot
-
 EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
