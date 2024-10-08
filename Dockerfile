@@ -16,13 +16,14 @@ COPY . .
 # Construir la aplicación
 RUN npm run build
 
-# Usar una imagen base de nginx
+# Usar una imagen base de Nginx
 FROM nginx:stable-alpine
 
+# Copiar los archivos de la build de Vite al directorio de Nginx
+COPY --from=build /app/dist /usr/share/nginx/html
 
-RUN sed -i '1idaemon off;' /etc/nginx/nginx.conf
-
-
+# Copiar el archivo de configuración de Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-CMD ["nginx"]
+# Asegurarse de que Nginx esté ejecutándose en primer plano
+CMD ["nginx", "-g", "daemon off;"]

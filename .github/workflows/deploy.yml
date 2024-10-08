@@ -47,7 +47,7 @@ jobs:
             docker rm $(docker ps -aq) || true
             
             echo "Iniciando nuevo contenedor..."
-            docker run -d --name yochambeo-frontend -p 80:80 ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-front:latest
+            docker run -d --name yochambeo-frontend -p 80:80 --restart always ${{ secrets.DOCKER_HUB_USERNAME }}/yochambeo-front:latest
 
             echo "Eliminando imágenes no utilizadas..."
             docker image prune -a -f
