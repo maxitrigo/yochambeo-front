@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Usa una imagen base de Apache
-FROM httpd:latest
+FROM httpd:2.4
 
 COPY ./apache.conf /usr/local/apache2/conf/httpd.conf
 
