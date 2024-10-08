@@ -40,7 +40,7 @@ jobs:
             echo "Iniciando sesión en EC2..."
 
             echo "ir a la carpeta raiz"
-            cd yochambeofront
+            cd yochambeo
 
             echo "Deteniendo y eliminando todos los contenedores existentes..."
             docker stop $(docker ps -aq) || true
