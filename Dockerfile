@@ -19,7 +19,7 @@ RUN npm run build
 # Usa una imagen base de Apache
 FROM httpd:2.4
 
-COPY ./apache.conf /usr/local/apache2/conf/httpd.conf
+# COPY ./apache.conf /usr/local/apache2/conf/httpd.conf
 
 # Copia el contenido de la carpeta dist al contenedor
 COPY --from=build /app/dist/ /usr/local/apache2/htdocs/
