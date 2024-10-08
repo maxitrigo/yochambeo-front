@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://54.233.245.136:80';
+const API_URL = 'https://54.233.245.136:80';
 
 export const getAllJobs = async (page = 1) => {
   const limit = 10; // O el número que desees
