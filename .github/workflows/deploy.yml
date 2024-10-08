@@ -40,42 +40,41 @@ jobs:
             echo "Iniciando sesión en EC2..."
             
             echo "Ir a la carpeta raíz"
-            cd yochambeo
+            cd yochambeo || exit 1
 
             echo "Deteniendo y eliminando todos los contenedores existentes..."
             docker stop $(docker ps -aq) || true
             docker rm $(docker ps -aq) || true
-            
+
             echo "Eliminando imágenes no utilizadas..."
             docker image prune -a -f
-            
+
             # Pull tu imagen de DockerHub
             echo "Pull maxitrigo/yochambeo-front"
             docker pull maxitrigo/yochambeo-front
-            
+
             # Pull Apache image oficial
             echo "Pull Apache image oficial"
             docker pull httpd:latest
-            
-            # Crear contenedor para el front
-            echo "Iniciando contenedor del front"
-            docker run -d --name front -p 3000:80 maxitrigo/yochambeo-front
 
-            # Crear un contenedor para Apache
-            echo "Iniciando contenedor de Apache"
+            # Crear un contenedor con Apache y tu imagen
+            echo "Run Apache with your image"
             docker run -d --name apache-front -p 8080:80 httpd:latest
-            
-            # Configuración de Apache para apuntar al front
+
             echo "Configurando Apache para apuntar al front"
-            docker exec -it apache-front bash -c "echo '<VirtualHost *:80>
-            ProxyPass / http://front:80/
-                ProxyPassReverse / http://front:80/
-                </VirtualHost>' > /usr/local/apache2/conf/httpd.conf"
-                
-                # Habilitar el módulo proxy en Apache
-                echo "Habilitando módulo proxy en Apache"
-                docker exec -it apache-front bash -c "echo 'LoadModule proxy_module modules/mod_proxy.so' >> /usr/local/apache2/conf/httpd.conf"
-                docker exec -it apache-front bash -c "echo 'LoadModule proxy_http_module modules/mod_proxy_http.so' >> /usr/local/apache2/conf/httpd.conf"
-                
-                EOF
-                
+            echo "Habilitando módulo proxy en Apache"
+            docker exec apache-front bash -c "a2enmod proxy && a2enmod proxy_http"
+
+            echo "Configurando el archivo de configuración de Apache"
+            echo '
+            <VirtualHost *:80>
+                DocumentRoot /usr/local/apache2/htdocs
+                ProxyPass / http://maxitrigo/yochambeo-front:80/
+                ProxyPassReverse / http://maxitrigo/yochambeo-front:80/
+            </VirtualHost>
+            ' > /usr/local/apache2/conf/httpd.conf
+
+            echo "Reiniciando Apache"
+            docker restart apache-front
+
+          EOF
