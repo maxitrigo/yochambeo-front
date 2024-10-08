@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Usa una imagen base de Apache
-FROM httpd:alpine
+FROM httpd:latest
 
 # Copia la configuración personalizada de Apache
 COPY ./apache.conf /usr/local/apache2/conf/httpd.conf
