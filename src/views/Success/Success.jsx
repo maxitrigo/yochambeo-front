@@ -22,7 +22,7 @@ export const Success = () => {
                     // Redirigir a la página principal después de 3 segundos
                     const timeout = setTimeout(() => {
                         navigate('/'); 
-                    }, 3000);
+                    }, 2000);
                     
                     // Limpiar el timeout si el componente se desmonta
                     return () => clearTimeout(timeout);
@@ -31,6 +31,7 @@ export const Success = () => {
                     console.error('Error en el proceso después del pago:', error);
                 });
         } else {
+            localStorage.clear();
             console.log('Pago no aprobado');
             // Redirigir inmediatamente si el pago no fue aprobado
             navigate('/');

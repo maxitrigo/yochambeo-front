@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { initiatePayment } from '../routes/jobRoutes';
-import { set } from 'idb-keyval';
+import { set, clear } from 'idb-keyval';
 
 
 export const PublishJob = () => {
@@ -69,12 +69,12 @@ export const PublishJob = () => {
         // Guardar las imágenes en IndexedDB usando idb-keyval
         if (profileImage) {
             await set('profileImage', profileImage); // Guarda el profileImage
-            formDataWithFile.profileImage = profileImage.name; // O alguna referencia que necesites
+            formDataWithFile.profileImage = profileImage.name; // alguna referencia
         }
     
         if (instagramImage) {
             await set('instagramImage', instagramImage); // Guarda el instagramImage
-            formDataWithFile.instagramImage = instagramImage.name; // O alguna referencia que necesites
+            formDataWithFile.instagramImage = instagramImage.name; //alguna referencia
         }
     
         try {
@@ -89,6 +89,8 @@ export const PublishJob = () => {
                 window.location.href = paymentResponse;
             } else {
                 console.error('Error al procesar el pago');
+                clear();
+                localStorage.clear();
             }
 
         } catch (error) {
@@ -112,7 +114,7 @@ export const PublishJob = () => {
 
     return (
         <div className="flex flex-col items-center p-4">
-            <div className='flex flex-row justify-between w-full mb-8'>
+            <div className='flex flex-row justify-between w-full mb-8 md:w-1/2'>
             <h1 className="text-2xl font-bold">Publicar Trabajo</h1>
             <Link to="/" className='bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline'>Volver</Link>
             </div>
@@ -124,7 +126,7 @@ export const PublishJob = () => {
                         <label className="block text-sm font-bold mb-2" htmlFor="profile">
                             Imagen de la empresa (opcional)
                         </label>
-                        <label className="flex items-center justify-center bg-black text-white font-bold py-2 px-4 rounded-2xl cursor-pointer">
+                        <label className="flex items-center justify-center bg-black text-white font-bold py-2 px-4 rounded-2xl cursor-pointer transition-transform transform active:scale-95">
                             Elegir Archivo
                             <input
                                 type="file"
@@ -149,8 +151,9 @@ export const PublishJob = () => {
                     <label className="block text-sm font-bold mb-2" htmlFor="instagram">
                         Imagen de instagram (opcional)
                     </label>
+                    <p className="text-sm mb-2 text-gray-500">Se republicara junto a la descripcion en nuestra cuenta de instagram tamaño maximo 1080 x 1350 imagenes verticales.</p>
                     <div className="items-center justify-between">
-                        <label className="flex items-center justify-center bg-black text-white font-bold py-2 px-4 rounded-2xl cursor-pointer">
+                        <label className="flex items-center justify-center bg-black text-white font-bold py-2 px-4 rounded-2xl cursor-pointer transition-transform transform active:scale-95">
                             Elegir Archivo
                             <input
                                 type="file"
@@ -332,12 +335,13 @@ Vehículo propio (preferible).'
                     />
                 </div>
 
-                <div id="submit" className='flex justify-center p-6'>
+                <div id="submit" className='flex flex-col items-center justify-center p-6'>
+                    <p className='text-gray-400 mb-4'>Las publicaciones tienen un costo de $100 c/u</p>
                 <button
                     type="submit"
-                    className="bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline"
+                    className="bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline transition-transform transform active:scale-95"
                 >
-                    Publicar Trabajo
+                    Pagar y Publicar Trabajo
                 </button>
                 </div>
             </form>
