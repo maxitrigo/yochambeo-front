@@ -51,7 +51,7 @@ jobs:
             docker pull maxitrigo/yochambeo-front:latest
 
             echo "run image"
-            docker run -d -p 80:80 -p 443:443 --name yochambeo -v /etc/letsencrypt:/etc/letsencrypt maxitrigo/yochambeo-front:latest
+            docker run -d -p 80:80 -p 8080:443 --name yochambeo -v /etc/letsencrypt:/etc/letsencrypt maxitrigo/yochambeo-front:latest
 
             echo "borrar imagenes no usadas"
             docker image prune -a -f
