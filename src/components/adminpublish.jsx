@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { initiatePayment } from '../routes/jobRoutes';
-import { set, clear } from 'idb-keyval';
+import { createJobAdmin } from '../routes/jobRoutes';
 
 
-export const PublishJob = () => {
+export const AdminPublish = () => {
 
     const navigate = useNavigate();
     
@@ -54,59 +53,39 @@ export const PublishJob = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
     
-        const formDataWithFile = {
-            title: formData.title,
-            description: formData.description,
-            location: formData.location,
-            company: formData.company,
-            salary: formData.salary,
-            requirements: formData.requirements,
-            phone: formData.phone,
-            email: formData.email,
-            website: formData.website,
-        };
+        const formDataWithFile = new FormData();
+
+        // Agregar los campos del formulario al formData
+        formDataWithFile.append('title', formData.title);
+        formDataWithFile.append('description', formData.description);
+        formDataWithFile.append('location', formData.location);
+        formDataWithFile.append('company', formData.company);
+        formDataWithFile.append('salary', formData.salary);
+        formDataWithFile.append('requirements', formData.requirements);
+        formDataWithFile.append('phone', formData.phone);
+        formDataWithFile.append('email', formData.email);
+        formDataWithFile.append('website', formData.website);
+        
+        
     
-        // Guardar las imágenes en IndexedDB usando idb-keyval
         if (profileImage) {
-            await set('profileImage', profileImage); // Guarda el profileImage
-            formDataWithFile.profileImage = profileImage.name; // alguna referencia
+            formDataWithFile.append('files', profileImage); // Asegúrate de que profileImage sea un archivo
         }
     
         if (instagramImage) {
-            await set('instagramImage', instagramImage); // Guarda el instagramImage
-            formDataWithFile.instagramImage = instagramImage.name; //alguna referencia
+            formDataWithFile.append('files', instagramImage); // Asegúrate de que instagramImage sea un archivo
         }
-    
+
+        //sin proceso de pago
         try {
-            // Guardar los datos del formulario en localStorage
-            localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
-    
-            // Iniciar el proceso de pago
-            const paymentResponse = await initiatePayment();
-    
-            if (paymentResponse) {
-                // Redirigir al link de pago
-                window.location.href = paymentResponse;
-            } else {
-                console.error('Error al procesar el pago');
-                clear();
-                localStorage.clear();
-            }
-
-        } catch (error) {
-            console.error('Error al publicar el trabajo:', error);
-        }
-
-        // //sin proceso de pago
-        // try {
-        //     // Guardar los datos del formulario en localStorage
-        //     localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
+            const token = localStorage.getItem('token');
+            console.log(token);
             
-        //     // Redirigir a la página de éxito
-        //     navigate('/success'); // Ajusta la ruta según sea necesario
-        // } catch (error) {
-        //     console.error('Error al enviar el trabajo sin pagar:', error);
-        // }
+            
+            createJobAdmin(formDataWithFile, token);
+        } catch (error) {
+            console.error('Error al enviar el trabajo sin pagar:', error);
+        }
 
 
     };
@@ -114,7 +93,7 @@ export const PublishJob = () => {
 
     return (
         <div className="flex flex-col items-center p-4">
-            <div className='flex flex-row justify-between mb-8 w-full md:w-3/4 lg:w-1/2'>
+            <div className='flex flex-row justify-between w-full mb-8 md:w-1/2'>
             <h1 className="text-2xl font-bold">Publicar Trabajo</h1>
             <Link to="/" className='bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline'>Volver</Link>
             </div>
@@ -350,4 +329,3 @@ Vehículo propio (preferible).'
         </div>
     );
 };
-

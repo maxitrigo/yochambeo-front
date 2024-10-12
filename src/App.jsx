@@ -1,22 +1,29 @@
-import './App.css'
-import './index.css'
-import { Home } from './views/Home/home'
+import './App.css';
+import './index.css';
+import { Home } from './views/Home/home';
 import { PublishJobView } from './views/PublishJob/Publish';
 import { Success } from './views/Success/Success';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Auth } from './views/Auth/Auth';
+import { Route, Routes } from 'react-router-dom';
+import { AdminView } from './views/Admin/AdminView';
+import AdminPrivateRoute from './helpers/PrivateRoute';
+import { Register } from './views/Register/Register';
 
 function App() {
+    return (
 
 
-  return (
-    <Router >
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/publish" element={<PublishJobView />} />
-        <Route path="/success" element={<Success />} />
-      </Routes>
-    </Router>
-  )
+                <Routes>
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/" element={<Home />} />
+                    <Route path="/publish" element={<PublishJobView />} />
+                    <Route path="/success" element={<Success />} />
+                    <Route path="/admin" element={<AdminPrivateRoute><AdminView/></AdminPrivateRoute>}/>
+                </Routes>
+
+    );
 }
 
-export default App
+export default App;
+
