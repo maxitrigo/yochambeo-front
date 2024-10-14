@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
+import { resizeImage } from '../../utils/images';
 
 
 export const CropImage = () => {
@@ -42,7 +43,9 @@ export const CropImage = () => {
                     );
 
                     const base64Image = canvas.toDataURL('image/jpeg');
-                    resolve(base64Image);
+                    const resized64Image = resizeImage(base64Image, 500);
+
+                    resolve(resized64Image);
                 }
 
                 image.onerror = (error) => {
