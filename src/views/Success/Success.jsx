@@ -25,6 +25,7 @@ export const Success = () => {
             //Llamar a sendFilesToCreateJob cuando el pago sea aprobado
             sendFilesToCreateJob(token)
                 .then(() => {
+                    setLoading(false);
                     // Redirigir a la página principal después de 3 segundos
                     const timeout = setTimeout(() => {
                         navigate('/'); 
@@ -47,9 +48,11 @@ export const Success = () => {
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
             {loading ? ( // Mostrar el loader si está cargando
-                <div>
+                <div className='flex flex-col items-center justify-center'>
                     <h1 className='text-2xl font-bold'>Publicando...</h1>
-                    <div className="loader"></div> // Aquí va el loader
+                    <div className="loader"></div>
+                    <p className='text-lg'>Gracias por confiar.</p>
+                    <p className='text-4xl'>❤️‍🔥</p>
                 </div>
             ) : (
                 <>
