@@ -43,7 +43,7 @@ export const PublishJob = () => {
         if (file) {
             // setProfilePreview(URL.createObjectURL(file));
             const image = URL.createObjectURL(file);
-            navigate('/crop', { state: { image: image, type: 'profile' } });
+            navigate('/crop', { state: { image: image, type: 'profile', from: 'publish' } });
         }
     };
     
@@ -53,7 +53,7 @@ export const PublishJob = () => {
         if (file) {
             // setInstagramPreview(URL.createObjectURL(file));
             const image = URL.createObjectURL(file);
-            navigate('/crop', { state: { image: image, type: 'instagram' } });
+            navigate('/crop', { state: { image: image, type: 'instagram', from: 'publish' } });
         }
     };
 

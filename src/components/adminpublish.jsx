@@ -39,7 +39,7 @@ export const AdminPublish = () => {
         if (file) {
             // setProfilePreview(URL.createObjectURL(file));
             const image = URL.createObjectURL(file);
-            navigate('/crop', { state: { image: image, type: 'profile' } });
+            navigate('/crop', { state: { image: image, type: 'profile', from: 'admin' } });
         }
     };
     
@@ -49,7 +49,7 @@ export const AdminPublish = () => {
         if (file) {
             // setInstagramPreview(URL.createObjectURL(file));
             const image = URL.createObjectURL(file);
-            navigate('/crop', { state: { image: image, type: 'instagram' } });
+            navigate('/crop', { state: { image: image, type: 'instagram', from: 'admin' } });
         }
     };
 
@@ -100,8 +100,6 @@ export const AdminPublish = () => {
         //sin proceso de pago
         try {
             const token = localStorage.getItem('token');
-            console.log(token);
-            
             
             createJobAdmin(formDataWithFile, token);
         } catch (error) {

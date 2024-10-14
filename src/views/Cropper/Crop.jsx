@@ -63,8 +63,13 @@ export const CropImage = () => {
         } else if (state.type === 'instagram') {
             localStorage.setItem('instagramBase64', croppedImage);
         }
-    
-        navigate('/publish', { state: { type: state.type } });
+        
+        // Redirigir a la vista de publicación
+        if(state.from === 'admin') {
+            navigate('/admin', { state: { type: state.type } }); 
+        }else if(state.from === 'publish') {
+            navigate('/publish', { state: { type: state.type } });
+        }
     };
 
     return (
