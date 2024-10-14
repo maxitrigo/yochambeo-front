@@ -1,10 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { sendFilesToCreateJob } from '../../utils/sendFilesToCreateJob'; // Ajusta la ruta según donde esté tu función
 import { useEffect } from 'react';
+import { useState } from 'react';
 
 export const Success = () => {
     const location = useLocation();
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
 
     //con proceso de pago
     useEffect(() => {
@@ -24,7 +27,7 @@ export const Success = () => {
                 .then(() => {
                     // Redirigir a la página principal después de 3 segundos
                     const timeout = setTimeout(() => {
-                        navigate('/'); 
+                        // navigate('/'); 
                     }, 2000);
                     
                     // Limpiar el timeout si el componente se desmonta
@@ -37,7 +40,7 @@ export const Success = () => {
             localStorage.clear();
             console.log('Pago no aprobado');
             // Redirigir inmediatamente si el pago no fue aprobado
-            navigate('/');
+            // navigate('/');
         }
     }, [location, navigate]);
 
