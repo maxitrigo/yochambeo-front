@@ -54,17 +54,19 @@ export const AdminPublish = () => {
 
     useEffect(() => {
         // Recuperar la vista previa de la imagen de perfil
-        const savedProfilePreview = localStorage.getItem('profilePreview');
+        const profileBase64 = localStorage.getItem('profileBase64');
+        const profileToFile = convertBase64ToFile(profileBase64, 'profilePreview.jpg');//convertimos la imagen nuevamente a un archivo
         if (savedProfilePreview) {
-            setProfileImage(savedProfilePreview);
+            setProfileImage(profileToFile);
             setProfilePreview(savedProfilePreview);
         }
     
         // Recuperar la vista previa de la imagen de Instagram
-        const savedInstagramPreview = localStorage.getItem('instagramPreview');
+        const instagramBase64 = localStorage.getItem('instagramBase64');
+        const instagramToFile = convertBase64ToFile(instagramBase64, 'instagramPreview.jpg');//convertimos la imagen nuevamente a un archivo
         if (savedInstagramPreview) {
-            setInstagramImage(savedInstagramPreview);
-            setInstagramPreview(savedInstagramPreview);
+            setInstagramImage(instagramToFile);
+            setInstagramPreview(instagramBase64);
         }
     }, []);
 

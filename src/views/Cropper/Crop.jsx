@@ -60,9 +60,9 @@ export const CropImage = () => {
         
         // Guardar la imagen recortada en localStorage
         if (state.type === 'profile') {
-            localStorage.setItem('profilePreview', croppedImage); 
+            localStorage.setItem('profileBase64', croppedImage); 
         } else if (state.type === 'instagram') {
-            localStorage.setItem('instagramPreview', croppedImage);
+            localStorage.setItem('instagramBase64', croppedImage);
         }
     
         navigate('/publish', { state: { type: state.type } });
