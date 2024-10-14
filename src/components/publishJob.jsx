@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initiatePayment } from '../routes/jobRoutes';
 import { useLocation } from 'react-router-dom';
-import { convertBase64ToFile } from '../utils/images';
 
 
 export const PublishJob = () => {

@@ -1,5 +1,5 @@
-import { get } from 'idb-keyval';
 import { createJob } from '../routes/jobRoutes';
+import { convertBase64ToFile } from './images';
 
 export const sendFilesToCreateJob = async (token) => {
     // 1. Recuperar los datos del formulario de localStorage

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 
 export const Home = () => {
     const [searchTerm, setSearchTerm] = useState("")
+    const [sortBy, setSortBy] = useState("date")
 
     const navigate = useNavigate()
 
@@ -28,7 +29,7 @@ export const Home = () => {
             <div className="sticky top-0 z-10 w-full bg-white">
                 <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </div>
-            <ListCardsContainer searchTerm={searchTerm} />
+            <ListCardsContainer searchTerm={searchTerm} sortBy={sortBy} />
             </div>
         </div>
     )
