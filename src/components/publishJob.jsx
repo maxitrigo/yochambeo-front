@@ -77,7 +77,7 @@ export const PublishJob = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        alert(handlesubmit);
+        alert('handleSubmit');
     
         const formDataWithFile = {
             title: formData.title,
