@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom';
 import { AdminView } from './views/Admin/AdminView';
 import AdminPrivateRoute from './helpers/PrivateRoute';
 import { Register } from './views/Register/Register';
+import { CropImage } from './views/Cropper/Crop';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/" element={<Home />} />
                     <Route path="/publish" element={<PublishJobView />} />
+                    <Route path="/crop" element={<CropImage />} />
                     <Route path="/success" element={<Success />} />
                     <Route path="/admin" element={<AdminPrivateRoute><AdminView/></AdminPrivateRoute>}/>
                 </Routes>

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { initiatePayment } from '../routes/jobRoutes';
 import { set, clear } from 'idb-keyval';
+import { useLocation } from 'react-router-dom';
 
 
 export const PublishJob = () => {
@@ -20,7 +21,7 @@ export const PublishJob = () => {
         website: '',
     });
 
-    const [isOpen, setIsOpen] = useState(false);
+    const { state } = useLocation();
 
     const [profileImage, setProfileImage] = useState(null);
     const [instagramImage, setInstagramImage] = useState(null);
@@ -37,19 +38,39 @@ export const PublishJob = () => {
 
     const handleProfileChange = (event) => {
         const file = event.target.files[0];
-        setProfileImage(file);
+        // setProfileImage(file);
         if (file) {
-            setProfilePreview(URL.createObjectURL(file));
+            // setProfilePreview(URL.createObjectURL(file));
+            const image = URL.createObjectURL(file);
+            navigate('/crop', { state: { image: image, type: 'profile' } });
         }
     };
     
     const handleInstagramChange = (event) => {
         const file = event.target.files[0];
-        setInstagramImage(file);
+        // setInstagramImage(file);
         if (file) {
-            setInstagramPreview(URL.createObjectURL(file));
+            // setInstagramPreview(URL.createObjectURL(file));
+            const image = URL.createObjectURL(file);
+            navigate('/crop', { state: { image: image, type: 'instagram' } });
         }
     };
+
+    useEffect(() => {
+        // Recuperar la vista previa de la imagen de perfil
+        const savedProfilePreview = localStorage.getItem('profilePreview');
+        if (savedProfilePreview) {
+            setProfileImage(savedProfilePreview);
+            setProfilePreview(savedProfilePreview);
+        }
+    
+        // Recuperar la vista previa de la imagen de Instagram
+        const savedInstagramPreview = localStorage.getItem('instagramPreview');
+        if (savedInstagramPreview) {
+            setInstagramImage(savedInstagramPreview);
+            setInstagramPreview(savedInstagramPreview);
+        }
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -97,18 +118,6 @@ export const PublishJob = () => {
             console.error('Error al publicar el trabajo:', error);
         }
 
-        // //sin proceso de pago
-        // try {
-        //     // Guardar los datos del formulario en localStorage
-        //     localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
-            
-        //     // Redirigir a la página de éxito
-        //     navigate('/success'); // Ajusta la ruta según sea necesario
-        // } catch (error) {
-        //     console.error('Error al enviar el trabajo sin pagar:', error);
-        // }
-
-
     };
     
 
@@ -151,7 +160,7 @@ export const PublishJob = () => {
                     <label className="block text-sm font-bold mb-2" htmlFor="instagram">
                         Imagen de instagram (opcional)
                     </label>
-                    <p className="text-sm mb-2 text-gray-500">Se republicara junto a la descripcion en nuestra cuenta de instagram tamaño maximo 1080 x 1350 imagenes verticales.</p>
+                    <p className="text-sm mb-2 text-gray-500">Se republicara junto a la descripcion en nuestra cuenta de instagram tamaño maximo 800 x 800 pixeles.</p>
                     <div className="items-center justify-between">
                         <label className="flex items-center justify-center bg-black text-white font-bold py-2 px-4 rounded-2xl cursor-pointer transition-transform transform active:scale-95">
                             Elegir Archivo
@@ -336,12 +345,12 @@ Vehículo propio (preferible).'
                 </div>
 
                 <div id="submit" className='flex flex-col items-center justify-center p-6'>
-                    <p className='text-gray-400 mb-4'>Las publicaciones tienen un costo de $100 c/u</p>
+                    <p className='text-gray-400 mb-4 text-center'>Las publicaciones tienen un costo de $100 c/u</p>
                 <button
                     type="submit"
                     className="bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline transition-transform transform active:scale-95"
                 >
-                    Pagar y Publicar Trabajo
+                    Publicar
                 </button>
                 </div>
             </form>

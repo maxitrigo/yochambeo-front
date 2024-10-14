@@ -1,3 +1,35 @@
 body {
     background-color: #ffffff;
   }
+
+  .zoom-range {
+    width: 100%; /* Ancho completo */
+    appearance: none; /* Quitar el estilo por defecto */
+    height: 15px; /* Ajustar la altura */
+    background: #ffffff; /* Color de fondo */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+}
+
+/* Estilo para el thumb en navegadores WebKit */
+.zoom-range::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Para WebKit */
+    appearance: none; /* Para otros navegadores */
+    width: 25px; /* Ancho del thumb */
+    height: 25px; /* Altura del thumb */
+    border-radius: 50%; /* Redondeado */
+    background: #ffffff; /* Color del thumb */
+    cursor: pointer; /* Cursor al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Estilo para el thumb en Firefox */
+.zoom-range::-moz-range-thumb {
+    width: 25px; /* Ancho del thumb */
+    height: 25px; /* Altura del thumb */
+    border-radius: 50%; /* Redondeado */
+    background: #ffffff; /* Color del thumb */
+    cursor: pointer; /* Cursor al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}

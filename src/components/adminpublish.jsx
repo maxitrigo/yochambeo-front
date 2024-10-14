@@ -19,8 +19,6 @@ export const AdminPublish = () => {
         website: '',
     });
 
-    const [isOpen, setIsOpen] = useState(false);
-
     const [profileImage, setProfileImage] = useState(null);
     const [instagramImage, setInstagramImage] = useState(null);
     const [profilePreview, setProfilePreview] = useState(null);
@@ -36,19 +34,39 @@ export const AdminPublish = () => {
 
     const handleProfileChange = (event) => {
         const file = event.target.files[0];
-        setProfileImage(file);
+        // setProfileImage(file);
         if (file) {
-            setProfilePreview(URL.createObjectURL(file));
+            // setProfilePreview(URL.createObjectURL(file));
+            const image = URL.createObjectURL(file);
+            navigate('/crop', { state: { image: image, type: 'profile' } });
         }
     };
     
     const handleInstagramChange = (event) => {
         const file = event.target.files[0];
-        setInstagramImage(file);
+        // setInstagramImage(file);
         if (file) {
-            setInstagramPreview(URL.createObjectURL(file));
+            // setInstagramPreview(URL.createObjectURL(file));
+            const image = URL.createObjectURL(file);
+            navigate('/crop', { state: { image: image, type: 'instagram' } });
         }
     };
+
+    useEffect(() => {
+        // Recuperar la vista previa de la imagen de perfil
+        const savedProfilePreview = localStorage.getItem('profilePreview');
+        if (savedProfilePreview) {
+            setProfileImage(savedProfilePreview);
+            setProfilePreview(savedProfilePreview);
+        }
+    
+        // Recuperar la vista previa de la imagen de Instagram
+        const savedInstagramPreview = localStorage.getItem('instagramPreview');
+        if (savedInstagramPreview) {
+            setInstagramImage(savedInstagramPreview);
+            setInstagramPreview(savedInstagramPreview);
+        }
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
