@@ -110,7 +110,7 @@ export const PublishJob = () => {
     
             if (paymentResponse) {
                 // Redirigir al link de pago
-                window.location.assign(paymentResponse);
+                location.assign(paymentResponse);
             } else {
                 console.error('Error al procesar el pago');
                 clear();
