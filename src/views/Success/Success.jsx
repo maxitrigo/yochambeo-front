@@ -27,7 +27,7 @@ export const Success = () => {
                 .then(() => {
                     // Redirigir a la página principal después de 3 segundos
                     const timeout = setTimeout(() => {
-                        // navigate('/'); 
+                        navigate('/'); 
                     }, 2000);
                     
                     // Limpiar el timeout si el componente se desmonta
@@ -40,14 +40,17 @@ export const Success = () => {
             localStorage.clear();
             console.log('Pago no aprobado');
             // Redirigir inmediatamente si el pago no fue aprobado
-            // navigate('/');
+            navigate('/');
         }
     }, [location, navigate]);
 
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
             {loading ? ( // Mostrar el loader si está cargando
-                <div className="loader"></div> // Aquí va el loader
+                <div>
+                    <h1 className='text-2xl font-bold'>Publicando...</h1>
+                    <div className="loader"></div> // Aquí va el loader
+                </div>
             ) : (
                 <>
                     <h1 className='text-2xl font-bold'>Publicación Exitosa</h1>

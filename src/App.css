@@ -36,7 +36,7 @@ body {
 
 .loader {
   border: 8px solid #f3f3f3; /* Color de fondo */
-  border-top: 8px solid #3498db; /* Color del borde que se moverá */
+  border-top: 8px solid #000000; /* Color del borde que se moverá */
   border-radius: 50%;
   width: 50px; /* Tamaño del loader */
   height: 50px; /* Tamaño del loader */
