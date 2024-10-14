@@ -64,7 +64,6 @@ export const createJobAdmin = async (formData, token) => {
 export const initiatePayment = async () => {
   const response = await fetch(`${API_URL}/mercadopago/create-preference`, { method: 'POST'});
   const data = await response.json();
-  console.log(data);
 
   // Guardar el token en localStorage
   localStorage.setItem('token', data.token);
