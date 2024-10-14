@@ -91,17 +91,31 @@ export const PublishJob = () => {
             website: formData.website,
         };
     
-        // Guardar las imágenes en IndexedDB usando idb-keyval
+            // Guardar las imágenes en IndexedDB usando idb-keyval
         if (profileImage) {
             alert('Guardando imagen de perfil');
-            await set('profileImage', profileImage); // Guarda el profileImage
-            formDataWithFile.profileImage = profileImage.name; // alguna referencia
+            try {
+                await set('profileImage', profileImage); // Guarda el profileImage
+                formDataWithFile.profileImage = profileImage.name; // alguna referencia
+                alert('Imagen de perfil guardada');
+            } catch (error) {
+                alert('Error al guardar imagen de perfil: ' + error.message);
+            }
+        } else {
+            alert('No hay imagen de perfil para guardar');
         }
-    
+
         if (instagramImage) {
             alert('Guardando imagen de Instagram');
-            await set('instagramImage', instagramImage); // Guarda el instagramImage
-            formDataWithFile.instagramImage = instagramImage.name; //alguna referencia
+            try {
+                await set('instagramImage', instagramImage); // Guarda el instagramImage
+                formDataWithFile.instagramImage = instagramImage.name; // alguna referencia
+                alert('Imagen de Instagram guardada');
+            } catch (error) {
+                alert('Error al guardar imagen de Instagram: ' + error.message);
+            }
+        } else {
+            alert('No hay imagen de Instagram para guardar');
         }
     
         try {
