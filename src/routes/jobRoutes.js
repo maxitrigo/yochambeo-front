@@ -16,9 +16,6 @@ export const createJob = async (formData, token) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        //Manejo de respuesta exitosa
-        console.log('Trabajo creado exitosamente:', response.data);
-        // Redireccionar o hacer algo más
     } catch (error) {
         if (error.response) {
             // El servidor respondió con un código de estado diferente a 2xx
@@ -46,9 +43,7 @@ export const createJobAdmin = async (formData, token) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        //Manejo de respuesta exitosa
-        console.log('Trabajo creado exitosamente:', response.data);
-        // Redireccionar o hacer algo más
+        alert('Trabajo creado exitosamente');
     } catch (error) {
         if (error.response) {
             // El servidor respondió con un código de estado diferente a 2xx

@@ -110,7 +110,6 @@ export const AdminPublish = () => {
     };
 
     const volverOnClick = () => {
-        clear();
         localStorage.clear();
     };
     

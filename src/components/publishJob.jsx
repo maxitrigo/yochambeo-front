@@ -124,7 +124,6 @@ export const PublishJob = () => {
     };
 
     const volverOnClick = () => {
-        clear();
         localStorage.clear();
         navigate('/');
     };
