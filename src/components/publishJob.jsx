@@ -104,7 +104,8 @@ export const PublishJob = () => {
         try {
             // Guardar los datos del formulario en localStorage
             localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
-    
+            
+            alert('iniciando pago');
             // Iniciar el proceso de pago
             const paymentResponse = await initiatePayment();
     
