@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
-import { resizeImage } from '../../utils/images';
+import { resizeImage } from '../../utils/resizeImage';
 
 
 export const CropImage = () => {
