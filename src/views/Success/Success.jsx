@@ -16,6 +16,9 @@ export const Success = () => {
             //Recuperar el token de localStorage
             const token = localStorage.getItem('token')
 
+            // Iniciar el loader
+            setLoading(true);
+
             //Llamar a sendFilesToCreateJob cuando el pago sea aprobado
             sendFilesToCreateJob(token)
                 .then(() => {
@@ -40,9 +43,15 @@ export const Success = () => {
 
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
-            <h1 className='text-2xl font-bold'>Publicación Exitosa</h1>
-            <p className='text-lg'>Gracias por confiar.</p>
-            <p className='text-4xl'>❤️‍🔥</p>
+            {loading ? ( // Mostrar el loader si está cargando
+                <div className="loader"></div> // Aquí va el loader
+            ) : (
+                <>
+                    <h1 className='text-2xl font-bold'>Publicación Exitosa</h1>
+                    <p className='text-lg'>Gracias por confiar.</p>
+                    <p className='text-4xl'>❤️‍🔥</p>
+                </>
+            )}
         </div>
     );
 };
