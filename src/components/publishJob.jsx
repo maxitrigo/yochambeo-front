@@ -77,6 +77,7 @@ export const PublishJob = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        alert(handlesubmit);
     
         const formDataWithFile = {
             title: formData.title,
@@ -92,16 +93,19 @@ export const PublishJob = () => {
     
         // Guardar las imágenes en IndexedDB usando idb-keyval
         if (profileImage) {
+            alert('Guardando imagen de perfil');
             await set('profileImage', profileImage); // Guarda el profileImage
             formDataWithFile.profileImage = profileImage.name; // alguna referencia
         }
     
         if (instagramImage) {
+            alert('Guardando imagen de Instagram');
             await set('instagramImage', instagramImage); // Guarda el instagramImage
             formDataWithFile.instagramImage = instagramImage.name; //alguna referencia
         }
     
         try {
+            alert('guardando en local storage')
             // Guardar los datos del formulario en localStorage
             localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
             
