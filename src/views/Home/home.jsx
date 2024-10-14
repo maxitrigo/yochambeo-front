@@ -28,7 +28,7 @@ export const Home = () => {
             <div className="sticky top-0 z-10 w-full bg-white">
                 <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </div>
-            <ListCardsContainer searchTerm={searchTerm} sortBy={sortBy} />
+            <ListCardsContainer searchTerm={searchTerm} />
             </div>
         </div>
     )
