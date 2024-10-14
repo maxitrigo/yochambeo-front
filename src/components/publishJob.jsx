@@ -109,11 +109,12 @@ export const PublishJob = () => {
             const paymentResponse = await initiatePayment();
     
             if (paymentResponse) {
+                alert('iniciando proceso de pago');
+                
                 // Redirigir al link de pago
                 location.assign(paymentResponse);
             } else {
                 console.error('Error al procesar el pago');
-                clear();
                 localStorage.clear();
             }
 

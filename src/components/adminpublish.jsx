@@ -111,6 +111,7 @@ export const AdminPublish = () => {
 
     const volverOnClick = () => {
         localStorage.clear();
+        navigate('/');
     };
     
 
