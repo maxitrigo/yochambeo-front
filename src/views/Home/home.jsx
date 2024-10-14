@@ -1,12 +1,18 @@
 import { useState } from "react"
 import { ListCardsContainer } from "../../components/listCardsContainer"
 import { SearchBox } from "../../components/searchBox"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 
 export const Home = () => {
     const [searchTerm, setSearchTerm] = useState("")
-    const [sortBy, setSortBy] = useState("date")
+
+    const navigate = useNavigate()
+
+    const publish = () => {
+        localStorage.clear()
+        navigate('/publish')
+    }
 
     return (
         <div className="flex flex-col items-center h-screen w-full">
@@ -16,7 +22,7 @@ export const Home = () => {
                 <h1 className="text-3xl font-bold">YoChambeo</h1>
                 </div>
                 <div className="flex flex-col justify-between">
-                    <Link to="/publish" className="text-white border bg-black px-2 py-2 rounded-2xl font-bold">Publicar</Link>
+                    <button onClick={publish} className="text-white border bg-black px-2 py-2 rounded-2xl font-bold">Publicar</button>
                 </div>
             </div>
             <div className="sticky top-0 z-10 w-full bg-white">

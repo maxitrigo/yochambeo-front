@@ -6,8 +6,12 @@ export const sendFilesToCreateJob = async (token) => {
     const storedFormData = JSON.parse(localStorage.getItem('formDataWithFile'));
     
     // 2. Recuperar imágenes de IndexedDB
-    const profileImage = await get('profileImage'); // Aquí se asume que has guardado 'profileImage' en IndexedDB
-    const instagramImage = await get('instagramImage'); // Aquí se asume que has guardado 'instagramImage' en IndexedDB
+    const profileBase64 = localStorage.getItem('profileBase64'); // Aquí se asume que has guardado 'profileImage' en IndexedDB
+    const instagramBase64 = localStorage.getItem('instagramBase64'); // Aquí se asume que has guardado 'instagramImage' en IndexedDB
+    
+    const profileImage = convertBase64ToFile(profileBase64, 'profilePreview.jpg');//convertimos la imagen nuevamente a un archivo
+    const instagramImage = convertBase64ToFile(instagramBase64, 'instagramPreview.jpg');//convertimos la imagen nuevamente a un archivo
+
 
     // 3. Crear un nuevo FormData para enviar
     const formDataWithFile = new FormData();

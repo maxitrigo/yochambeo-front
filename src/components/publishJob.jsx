@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { initiatePayment } from '../routes/jobRoutes';
-import { set, clear } from 'idb-keyval';
 import { useLocation } from 'react-router-dom';
 import { convertBase64ToFile } from '../utils/images';
 
@@ -24,8 +23,6 @@ export const PublishJob = () => {
 
     const { state } = useLocation();
 
-    const [profileImage, setProfileImage] = useState(null);
-    const [instagramImage, setInstagramImage] = useState(null);
     const [profilePreview, setProfilePreview] = useState(null);
     const [instagramPreview, setInstagramPreview] = useState(null);
 
@@ -39,9 +36,7 @@ export const PublishJob = () => {
 
     const handleProfileChange = (event) => {
         const file = event.target.files[0];
-        // setProfileImage(file);
         if (file) {
-            // setProfilePreview(URL.createObjectURL(file));
             const image = URL.createObjectURL(file);
             navigate('/crop', { state: { image: image, type: 'profile', from: 'publish' } });
         }
@@ -49,9 +44,7 @@ export const PublishJob = () => {
     
     const handleInstagramChange = (event) => {
         const file = event.target.files[0];
-        // setInstagramImage(file);
         if (file) {
-            // setInstagramPreview(URL.createObjectURL(file));
             const image = URL.createObjectURL(file);
             navigate('/crop', { state: { image: image, type: 'instagram', from: 'publish' } });
         }
@@ -60,25 +53,20 @@ export const PublishJob = () => {
     useEffect(() => {
         // Recuperar la vista previa de la imagen de perfil
         const profileBase64 = localStorage.getItem('profileBase64');
-        const profileToFile = convertBase64ToFile(profileBase64, 'profilePreview.jpg');//convertimos la imagen nuevamente a un archivo
         if (profileBase64) {
-            setProfileImage(profileToFile);
             setProfilePreview(profileBase64);
         }
     
         // Recuperar la vista previa de la imagen de Instagram
         const instagramBase64 = localStorage.getItem('instagramBase64');
-        const instagramToFile = convertBase64ToFile(instagramBase64, 'instagramPreview.jpg');//convertimos la imagen nuevamente a un archivo
         if (instagramBase64) {
-            setInstagramImage(instagramToFile);
             setInstagramPreview(instagramBase64);
         }
     }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        alert('handleSubmit');
-    
+
         const formDataWithFile = {
             title: formData.title,
             description: formData.description,
@@ -91,45 +79,41 @@ export const PublishJob = () => {
             website: formData.website,
         };
     
-            // Guardar las imágenes en IndexedDB usando idb-keyval
-        if (profileImage) {
-            alert('Guardando imagen de perfil');
-            try {
-                await set('profileImage', profileImage); // Guarda el profileImage
-                formDataWithFile.profileImage = profileImage.name; // alguna referencia
-                alert('Imagen de perfil guardada');
-            } catch (error) {
-                alert('Error al guardar imagen de perfil: ' + error.message);
-            }
-        } else {
-            alert('No hay imagen de perfil para guardar');
-        }
+        //     // Guardar las imágenes en IndexedDB usando idb-keyval
+        // if (profileImage) {
+        //     alert('Guardando imagen de perfil');
+        //     try {
+        //         await set('profileImage', profileImage); // Guarda el profileImage
+        //         formDataWithFile.profileImage = profileImage.name; // alguna referencia
+        //         alert('Imagen de perfil guardada');
+        //     } catch (error) {
+        //         alert('Error al guardar imagen de perfil: ' + error.message);
+        //     }
+        // } else {
+        //     alert('No hay imagen de perfil para guardar');
+        // }
 
-        if (instagramImage) {
-            alert('Guardando imagen de Instagram');
-            try {
-                await set('instagramImage', instagramImage); // Guarda el instagramImage
-                formDataWithFile.instagramImage = instagramImage.name; // alguna referencia
-                alert('Imagen de Instagram guardada');
-            } catch (error) {
-                alert('Error al guardar imagen de Instagram: ' + error.message);
-            }
-        } else {
-            alert('No hay imagen de Instagram para guardar');
-        }
+        // if (instagramImage) {
+        //     alert('Guardando imagen de Instagram');
+        //     try {
+        //         await set('instagramImage', instagramImage); // Guarda el instagramImage
+        //         formDataWithFile.instagramImage = instagramImage.name; // alguna referencia
+        //         alert('Imagen de Instagram guardada');
+        //     } catch (error) {
+        //         alert('Error al guardar imagen de Instagram: ' + error.message);
+        //     }
+        // } else {
+        //     alert('No hay imagen de Instagram para guardar');
+        // }
     
         try {
-            alert('guardando en local storage')
             // Guardar los datos del formulario en localStorage
             localStorage.setItem('formDataWithFile', JSON.stringify(formDataWithFile));
             
-            alert('iniciando pago');
             // Iniciar el proceso de pago
             const paymentResponse = await initiatePayment();
     
             if (paymentResponse) {
-                alert('iniciando proceso de pago');
-                
                 // Redirigir al link de pago
                 location.assign(paymentResponse);
             } else {
