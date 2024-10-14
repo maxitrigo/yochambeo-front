@@ -61,15 +61,15 @@ export const PublishJob = () => {
         // Recuperar la vista previa de la imagen de perfil
         const profileBase64 = localStorage.getItem('profileBase64');
         const profileToFile = convertBase64ToFile(profileBase64, 'profilePreview.jpg');//convertimos la imagen nuevamente a un archivo
-        if (savedProfilePreview) {
+        if (profileBase64) {
             setProfileImage(profileToFile);
-            setProfilePreview(savedProfilePreview);
+            setProfilePreview(profileBase64);
         }
     
         // Recuperar la vista previa de la imagen de Instagram
         const instagramBase64 = localStorage.getItem('instagramBase64');
         const instagramToFile = convertBase64ToFile(instagramBase64, 'instagramPreview.jpg');//convertimos la imagen nuevamente a un archivo
-        if (savedInstagramPreview) {
+        if (instagramBase64) {
             setInstagramImage(instagramToFile);
             setInstagramPreview(instagramBase64);
         }
@@ -122,13 +122,19 @@ export const PublishJob = () => {
         }
 
     };
+
+    const volverOnClick = () => {
+        clear();
+        localStorage.clear();
+        navigate('/');
+    };
     
 
     return (
         <div className="flex flex-col items-center p-4">
             <div className='flex flex-row justify-between mb-8 w-full md:w-3/4 lg:w-1/2'>
             <h1 className="text-2xl font-bold">Publicar Trabajo</h1>
-            <Link to="/" className='bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline'>Volver</Link>
+            <button onClick={volverOnClick} className='bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline'>Volver</button>
             </div>
 
             <form onSubmit={handleSubmit} className="w-full max-w-md">

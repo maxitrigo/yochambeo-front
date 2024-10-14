@@ -1,4 +1,9 @@
 export const convertBase64ToFile = (base64String, fileName) => {
+
+    if (!base64String) {
+        return null;
+    }
+
     // Separar la parte base64 de la cabecera de la cadena
     const [metadata, base64Data] = base64String.split(',');
     

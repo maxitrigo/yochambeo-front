@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
-import { get } from 'idb-keyval';
 
 
 export const CropImage = () => {
