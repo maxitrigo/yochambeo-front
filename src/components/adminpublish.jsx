@@ -109,13 +109,18 @@ export const AdminPublish = () => {
 
 
     };
+
+    const volverOnClick = () => {
+        clear();
+        localStorage.clear();
+    };
     
 
     return (
         <div className="flex flex-col items-center p-4">
             <div className='flex flex-row justify-between w-full mb-8 md:w-1/2'>
             <h1 className="text-2xl font-bold">Publicar Trabajo</h1>
-            <button onClick={volverOnClick} className='bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline'>Volver</button>
+            <button onClick={volverOnClick} className='bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline'>Limpiar</button>
             </div>
 
             <form onSubmit={handleSubmit} className="w-full max-w-md">
