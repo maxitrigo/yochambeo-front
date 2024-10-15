@@ -8,7 +8,6 @@ import { useLocation } from 'react-router-dom';
 export const AdminPublish = () => {
 
     const navigate = useNavigate();
-    const { state } = useLocation();
     
     const [formData, setFormData] = useState({
         title: '',
@@ -56,10 +55,7 @@ export const AdminPublish = () => {
     };
 
     useEffect(() => {
-        if ( state === null){
-            localStorage.clear()
-        }
-        if(state && state.from === 'crop'){
+
             // Recuperar la vista previa de la imagen de perfil
             const profileBase64 = localStorage.getItem('profileBase64');
             const profileToFile = convertBase64ToFile(profileBase64, 'profilePreview.jpg');//convertimos la imagen nuevamente a un archivo
@@ -75,8 +71,8 @@ export const AdminPublish = () => {
                 setInstagramImage(instagramToFile);
                 setInstagramPreview(instagramBase64);
             }
-        }
-    }, [state]);
+
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -117,7 +113,6 @@ export const AdminPublish = () => {
     };
 
     const volverOnClick = () => {
-        localStorage.clear();
         setInstagramPreview(null)
         setProfilePreview(null)
     };
