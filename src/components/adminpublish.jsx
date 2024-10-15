@@ -113,8 +113,10 @@ export const AdminPublish = () => {
     };
 
     const volverOnClick = () => {
+        localStorage.clear();
         setInstagramPreview(null)
         setProfilePreview(null)
+        navigate('/');
     };
     
 
