@@ -93,11 +93,11 @@ export const AdminPublish = () => {
         
     
         if (profileImage) {
-            formDataWithFile.append('files', profileImage); // Asegúrate de que profileImage sea un archivo
+            formDataWithFile.append('profileImage', profileImage); // Asegúrate de que profileImage sea un archivo
         }
     
         if (instagramImage) {
-            formDataWithFile.append('files', instagramImage); // Asegúrate de que instagramImage sea un archivo
+            formDataWithFile.append('instagramImage', instagramImage); // Asegúrate de que instagramImage sea un archivo
         }
 
         //sin proceso de pago

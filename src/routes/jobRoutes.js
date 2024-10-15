@@ -35,7 +35,6 @@ export const createJob = async (formData, token) => {
 
 export const createJobAdmin = async (formData, token) => {
     try {
-        console.log(token);
         
         // Llamada a la API para crear un trabajo con el token en el header
         const response = await axios.post(`${API_URL}/auth/publish`, formData, {
