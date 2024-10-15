@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createJobAdmin } from '../routes/jobRoutes';
 import { convertBase64ToFile } from '../utils/images';
+import { useLocation } from 'react-router-dom';
 
 
 export const AdminPublish = () => {
 
     const navigate = useNavigate();
+    const { state } = useLocation();
     
     const [formData, setFormData] = useState({
         title: '',
@@ -54,22 +56,27 @@ export const AdminPublish = () => {
     };
 
     useEffect(() => {
-        // Recuperar la vista previa de la imagen de perfil
-        const profileBase64 = localStorage.getItem('profileBase64');
-        const profileToFile = convertBase64ToFile(profileBase64, 'profilePreview.jpg');//convertimos la imagen nuevamente a un archivo
-        if (profileBase64) {
-            setProfileImage(profileToFile);
-            setProfilePreview(profileBase64);
+        if ( state === null){
+            localStorage.clear()
         }
-    
-        // Recuperar la vista previa de la imagen de Instagram
-        const instagramBase64 = localStorage.getItem('instagramBase64');
-        const instagramToFile = convertBase64ToFile(instagramBase64, 'instagramPreview.jpg');//convertimos la imagen nuevamente a un archivo
-        if (instagramBase64) {
-            setInstagramImage(instagramToFile);
-            setInstagramPreview(instagramBase64);
+        if(state && state.from === 'crop'){
+            // Recuperar la vista previa de la imagen de perfil
+            const profileBase64 = localStorage.getItem('profileBase64');
+            const profileToFile = convertBase64ToFile(profileBase64, 'profilePreview.jpg');//convertimos la imagen nuevamente a un archivo
+            if (profileBase64) {
+                setProfileImage(profileToFile);
+                setProfilePreview(profileBase64);
+            }
+        
+            // Recuperar la vista previa de la imagen de Instagram
+            const instagramBase64 = localStorage.getItem('instagramBase64');
+            const instagramToFile = convertBase64ToFile(instagramBase64, 'instagramPreview.jpg');//convertimos la imagen nuevamente a un archivo
+            if (instagramBase64) {
+                setInstagramImage(instagramToFile);
+                setInstagramPreview(instagramBase64);
+            }
         }
-    }, []);
+    }, [state]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -111,7 +118,8 @@ export const AdminPublish = () => {
 
     const volverOnClick = () => {
         localStorage.clear();
-        navigate('/');
+        setInstagramPreview(null)
+        setProfilePreview(null)
     };
     
 
@@ -154,7 +162,6 @@ export const AdminPublish = () => {
                     <label className="block text-sm font-bold mb-2" htmlFor="instagram">
                         Imagen de instagram (opcional)
                     </label>
-                    <p className="text-sm mb-2 text-gray-500">Se republicara junto a la descripcion en nuestra cuenta de instagram tamaño maximo 1080 x 1350 imagenes verticales.</p>
                     <div className="items-center justify-between">
                         <label className="flex items-center justify-center bg-black text-white font-bold py-2 px-4 rounded-2xl cursor-pointer transition-transform transform active:scale-95">
                             Elegir Archivo
@@ -198,22 +205,7 @@ export const AdminPublish = () => {
                         Descripción
                     </label>
                     <textarea
-                        placeholder='Ej: Estamos en la búsqueda de un electricista calificado para unirse a nuestro equipo en Montevideo.
-
-El candidato ideal debe contar con experiencia en instalaciones eléctricas residenciales y comerciales, y estar familiarizado con la normativa eléctrica vigente.
-
-Responsabilidades:
-Realizar instalaciones y reparaciones eléctricas en hogares y comercios.
-Diagnosticar y solucionar problemas eléctricos.
-Cumplir con las normativas de seguridad eléctrica en todos los trabajos.
-Instalación de cableado, enchufes, interruptores, y sistemas de iluminación.
-Mantenimiento preventivo de sistemas eléctricos.
-
-Ofrecemos:
-Sueldo competitivo de hasta $40,000 UYU mensuales.
-Oportunidades de crecimiento dentro de la empresa.
-Ambiente laboral seguro y profesional.
-Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comunícate al +598 98765432 para más detalles.'
+                        placeholder=''
                         id="description"
                         name="description"
                         value={formData.description}
@@ -277,11 +269,7 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                         Requisitos
                     </label>
                     <textarea
-                        placeholder='Ej: Experiencia comprobable de al menos 3 años como electricista.
-Conocimiento de planos eléctricos y herramientas del sector.
-Capacidad para trabajar de manera independiente y en equipo.
-Licencia y certificación de electricista vigente.
-Vehículo propio (preferible).'
+                        placeholder=''
                         id="requirements"
                         name="requirements"
                         value={formData.requirements}
@@ -339,12 +327,11 @@ Vehículo propio (preferible).'
                 </div>
 
                 <div id="submit" className='flex flex-col items-center justify-center p-6'>
-                    <p className='text-gray-400 mb-4'>Las publicaciones tienen un costo de $100 c/u</p>
                 <button
                     type="submit"
                     className="bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline transition-transform transform active:scale-95"
                 >
-                    Pagar y Publicar Trabajo
+                    Publicar
                 </button>
                 </div>
             </form>

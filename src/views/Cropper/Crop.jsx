@@ -69,9 +69,9 @@ export const CropImage = () => {
         
         // Redirigir a la vista de publicación
         if(state.from === 'admin') {
-            navigate('/admin', { state: { type: state.type } }); 
+            navigate('/admin', { state: { type: state.type, from: 'crop' } }); 
         }else if(state.from === 'publish') {
-            navigate('/publish', { state: { type: state.type } });
+            navigate('/publish', { state: { type: state.type, from : 'crop' } });
         }
     };
 

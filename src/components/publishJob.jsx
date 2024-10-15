@@ -50,18 +50,23 @@ export const PublishJob = () => {
     };
 
     useEffect(() => {
-        // Recuperar la vista previa de la imagen de perfil
-        const profileBase64 = localStorage.getItem('profileBase64');
-        if (profileBase64) {
-            setProfilePreview(profileBase64);
+        if(state === null) {
+            localStorage.clear()
         }
-    
-        // Recuperar la vista previa de la imagen de Instagram
-        const instagramBase64 = localStorage.getItem('instagramBase64');
-        if (instagramBase64) {
-            setInstagramPreview(instagramBase64);
+        if(state && state.from === 'crop') {
+            // Recuperar la vista previa de la imagen de perfil
+            const profileBase64 = localStorage.getItem('profileBase64');
+            if (profileBase64) {
+                setProfilePreview(profileBase64);
+            }
+        
+            // Recuperar la vista previa de la imagen de Instagram
+            const instagramBase64 = localStorage.getItem('instagramBase64');
+            if (instagramBase64) {
+                setInstagramPreview(instagramBase64);
+            }
         }
-    }, []);
+    }, [state]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -77,33 +82,6 @@ export const PublishJob = () => {
             email: formData.email,
             website: formData.website,
         };
-    
-        //     // Guardar las imágenes en IndexedDB usando idb-keyval
-        // if (profileImage) {
-        //     alert('Guardando imagen de perfil');
-        //     try {
-        //         await set('profileImage', profileImage); // Guarda el profileImage
-        //         formDataWithFile.profileImage = profileImage.name; // alguna referencia
-        //         alert('Imagen de perfil guardada');
-        //     } catch (error) {
-        //         alert('Error al guardar imagen de perfil: ' + error.message);
-        //     }
-        // } else {
-        //     alert('No hay imagen de perfil para guardar');
-        // }
-
-        // if (instagramImage) {
-        //     alert('Guardando imagen de Instagram');
-        //     try {
-        //         await set('instagramImage', instagramImage); // Guarda el instagramImage
-        //         formDataWithFile.instagramImage = instagramImage.name; // alguna referencia
-        //         alert('Imagen de Instagram guardada');
-        //     } catch (error) {
-        //         alert('Error al guardar imagen de Instagram: ' + error.message);
-        //     }
-        // } else {
-        //     alert('No hay imagen de Instagram para guardar');
-        // }
     
         try {
             // Guardar los datos del formulario en localStorage
