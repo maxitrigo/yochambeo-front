@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = 'https://api.yochambeo.com';
 
 export const getAllJobs = async (page = 1) => {
-  const limit = 10; // O el número que desees
+  const limit = 20; // O el número que desees
   const response = await axios.get(`${API_URL}/jobs?page=${page}&limit=${limit}`);
   return response.data;
 };
