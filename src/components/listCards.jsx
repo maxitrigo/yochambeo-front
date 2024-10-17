@@ -29,7 +29,7 @@ export const ListCards = ({  imgUrl,  title,  company,  location,  salary,  crea
 
       <div className="w-full">
 
-        <div className="w-1/2">
+        <div className="w-full">
 
           <h1 className="text-l font-bold">{title}</h1>
           <p className="text-sm">{company}</p>
