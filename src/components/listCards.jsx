@@ -17,7 +17,7 @@ export const ListCards = ({  imgUrl,  title,  company,  location,  salary,  crea
 
 
 
-      <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center border ml-2 mr-2">
+      <div className="w--20 h-20 bg-gray-100 rounded-full flex items-center justify-center border ml-2 mr-2">
       {imgUrl ? (
           <img src={imgUrl} alt={company} className="w-full h-full rounded-full object-cover" />
       ) : (
