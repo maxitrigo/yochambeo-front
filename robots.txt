@@ -19,6 +19,3 @@ Disallow: /*page=
 
 # Evitar que se rastreen los resultados de búsqueda
 Disallow: /search/
-
-# Sitemap
-Sitemap: https://yochambeo.com/sitemap.xml
