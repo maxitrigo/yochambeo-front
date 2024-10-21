@@ -1,15 +1,24 @@
+# Permitir acceso a todos los agentes de usuario
 User-agent: *
-Disallow: /admin/        # Bloquear acceso a la carpeta de administración
-Disallow: /login/        # Bloquear acceso a la página de login
-Disallow: /private/      # Bloquear acceso a la carpeta privada
-Disallow: /temp/         # Bloquear acceso a la carpeta temporal
 
-# Permitir todo lo demás
+# Bloquear acceso a áreas administrativas y archivos sensibles
+Disallow: /admin/
+Disallow: /login/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /config/
+Disallow: /.env
+
+# Permitir acceso a todo lo demás
 Allow: /
 
-# Evitar que los motores de búsqueda indexen parámetros de URL
+# Bloquear rastreo de parámetros de URL
 Disallow: /*?*           
+Disallow: /*sort=
+Disallow: /*page=
 
-# Evitar el rastreo de contenido duplicado
-Disallow: /page/         # Ejemplo de paginación
-Disallow: /?sort=        # Evitar parámetros de clasificación
+# Evitar que se rastreen los resultados de búsqueda
+Disallow: /search/
+
+# Sitemap
+Sitemap: https://yochambeo.com/sitemap.xml
