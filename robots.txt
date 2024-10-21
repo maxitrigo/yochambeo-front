@@ -1,0 +1,15 @@
+User-agent: *
+Disallow: /admin/        # Bloquear acceso a la carpeta de administración
+Disallow: /login/        # Bloquear acceso a la página de login
+Disallow: /private/      # Bloquear acceso a la carpeta privada
+Disallow: /temp/         # Bloquear acceso a la carpeta temporal
+
+# Permitir todo lo demás
+Allow: /
+
+# Evitar que los motores de búsqueda indexen parámetros de URL
+Disallow: /*?*           
+
+# Evitar el rastreo de contenido duplicado
+Disallow: /page/         # Ejemplo de paginación
+Disallow: /?sort=        # Evitar parámetros de clasificación
