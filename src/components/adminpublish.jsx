@@ -186,7 +186,7 @@ export const AdminPublish = () => {
                         Posicion
                     </label>
                     <input
-                        placeholder='Ej: Electricista'
+                        placeholder=''
                         type="text"
                         id="title"
                         name="title"
@@ -218,7 +218,7 @@ export const AdminPublish = () => {
                         Ubicación
                     </label>
                     <input
-                        placeholder='Ej: Maldonado, Montevideo, etc'
+                        placeholder=''
                         type="text"
                         id="location"
                         name="location"
@@ -234,7 +234,7 @@ export const AdminPublish = () => {
                         Empresa
                     </label>
                     <input
-                        placeholder='Ej: Turboelectric S.A'
+                        placeholder=''
                         type="text"
                         id="company"
                         name="company"
@@ -250,7 +250,7 @@ export const AdminPublish = () => {
                         Salario
                     </label>
                     <input
-                        placeholder='Ej: 40000 (solo numeros)'
+                        placeholder=''
                         type="text"
                         id="salary"
                         name="salary"
@@ -282,7 +282,7 @@ export const AdminPublish = () => {
                         Whatsapp (opcional)
                     </label>
                     <input
-                        placeholder='Ej: 098765432 (solo numeros)'
+                        placeholder=''
                         type="text"
                         id="phone"
                         name="phone"
@@ -297,7 +297,7 @@ export const AdminPublish = () => {
                         Correo Electrónico
                     </label>
                     <input
-                        placeholder='Ej: turboelectric@gmail.com'
+                        placeholder=''
                         type="email"
                         id="email"
                         name="email"
@@ -313,7 +313,7 @@ export const AdminPublish = () => {
                         Sitio Web (opcional)
                     </label>
                     <input
-                        placeholder='Ej: www.turboelectric.com'
+                        placeholder=''
                         type="text"
                         id="website"
                         name="website"
