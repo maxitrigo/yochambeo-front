@@ -10,6 +10,7 @@ export const ListCards = ({  imgUrl,  title,  company,  location,  salary,  crea
     const togleDetails = () => {
         setIsOpen(!isOpen)
     }
+    const filteredDescription = description.replace(/Accede a mas trabajos como este en https:\/\/yochambeo.com/g, '')
 
   return (
     <div className="">
@@ -60,7 +61,7 @@ export const ListCards = ({  imgUrl,  title,  company,  location,  salary,  crea
       {isOpen && (
         <div onClick={togleDetails} className="mt-2 p-4 border-t">
           <p className="font-bold text-lg mb-2 mt-2">Descripción:</p>
-          <pre className="font-sans whitespace-pre-wrap break-words">{description}</pre>
+          <pre className="font-sans whitespace-pre-wrap break-words">{filteredDescription}</pre>
           <p className="font-bold text-lg mb-2 mt-4">Requisitos:</p>
           <pre className="font-sans whitespace-pre-wrap break-words">{requirements}</pre>
           <div className="flex flex-row justify-start mt-4">
