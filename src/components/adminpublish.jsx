@@ -81,7 +81,8 @@ export const AdminPublish = () => {
 
         // Agregar los campos del formulario al formData
         formDataWithFile.append('title', formData.title);
-        formDataWithFile.append('description', formData.description);
+        const fullDescription = `${formData.description}\nAccede a mas trabajos como este en https://yochambeo.com`;
+        formDataWithFile.append('description', fullDescription);
         formDataWithFile.append('location', formData.location);
         formDataWithFile.append('company', formData.company);
         formDataWithFile.append('salary', formData.salary);
