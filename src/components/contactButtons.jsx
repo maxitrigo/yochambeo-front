@@ -13,7 +13,8 @@ const ContactButtons = ({ email, phone, website, title, description, requirement
         if (navigator.share) {
             navigator.share({
                 title: `Interés en el trabajo: ${title}`,
-                text: `Mirá este trabajo: ${title}\n\nDescripcion:\n${filteredDescription}\n\nRequisitos:\n${requirements}\n\nPodes enviar tu cv a ${email}\n\nEncontra mas trabajos como este en: ${window.location.href}`,
+                text: `Mirá este trabajo: ${title}\n\nDescripcion:\n${filteredDescription}\n\nRequisitos:\n${requirements}\n\nPodes enviar tu cv a ${email}\n\nEncontra mas trabajos como este en:`,
+                url: 'https://yochambeo.com'
             }).catch(console.error);
         } else {
             alert("Tu navegador no soporta la funcionalidad de compartir.");
