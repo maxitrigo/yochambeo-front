@@ -76,7 +76,7 @@ export const ListCards = ({  imgUrl,  title,  company,  location,  salary,  crea
             <p className="font-bold text-2xl">Postulate!</p>
             <p className="text-sm text-gray-500">Envia tu CV</p>
           </div>
-          <ContactButtons email={email} phone={phone} website={website} title={title} />
+          <ContactButtons email={email} phone={phone} website={website} title={title} description={description} requirements={requirements} />
         </div>
       )}
     </div>

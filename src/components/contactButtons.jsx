@@ -3,7 +3,7 @@ import { FaWhatsapp } from 'react-icons/fa'; // Icono de WhatsApp
 import { TbWorldWww } from 'react-icons/tb'; // Icono de Globe
 import { IoPaperPlaneOutline } from 'react-icons/io5';
 
-const ContactButtons = ({ email, phone, website, title }) => {
+const ContactButtons = ({ email, phone, website, title, description, requirements }) => {
 
     const areaCode = "+598"; // Código de área para Uruguay
     const formattedPhone = typeof phone === 'string' ? areaCode + phone.replace(/^0/, '').replace(/\D/g, '') : '';
@@ -12,7 +12,7 @@ const ContactButtons = ({ email, phone, website, title }) => {
         if (navigator.share) {
             navigator.share({
                 title: `Interés en el trabajo: ${title}`,
-                text: `Mirá este trabajo: ${title}, Descripcion: ${description}, Requerimientos: ${requirements}, Podes enviar tu cv a ${email}`,
+                text: `Mirá este trabajo: ${title}, Descripcion: ${description}, Requisitos: ${requirements}, Podes enviar tu cv a ${email}`,
                 url: window.location.href
             }).catch(console.error);
         } else {
