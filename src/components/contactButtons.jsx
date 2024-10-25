@@ -12,7 +12,7 @@ const ContactButtons = ({ email, phone, website, title }) => {
         if (navigator.share) {
             navigator.share({
                 title: `Interés en el trabajo: ${title}`,
-                text: `Mirá este trabajo: ${title}, podes enviar tu cv a ${email}`,
+                text: `Mirá este trabajo: ${title}, Descripcion: ${description}, Requerimientos: ${requirements}, Podes enviar tu cv a ${email}`,
                 url: window.location.href
             }).catch(console.error);
         } else {
