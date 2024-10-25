@@ -17,13 +17,13 @@ export const ListCardsContainer = ({ searchTerm, sortBy }) => {
 
   const loadJobs = async (page) => {
     try {
-      const res = await getAllJobs(page);
-      if (res.length === 0) {
+      const allJobs = await getAllJobs(page);
+      if (allJobs.length === 0) {
         setHasMore(false);
       } else {
         setJobs((prevJobs) => {
           // Concatenamos los nuevos trabajos al inicio de la lista
-          const uniqueJobs = [...new Map([...res, ...prevJobs].map(job => [job.id, job])).values()];
+          const uniqueJobs = [...new Map([...allJobs, ...prevJobs].map(job => [job.id, job])).values()];
           return uniqueJobs;
         });
       }

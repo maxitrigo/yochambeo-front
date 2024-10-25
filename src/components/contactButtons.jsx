@@ -8,12 +8,13 @@ const ContactButtons = ({ email, phone, website, title, description, requirement
     const areaCode = "+598"; // Código de área para Uruguay
     const formattedPhone = typeof phone === 'string' ? areaCode + phone.replace(/^0/, '').replace(/\D/g, '') : '';
     const filteredDescription = description.replace(/Accede a mas trabajos como este en https:\/\/yochambeo.com/g, '')
+    const reFilteredDescription = filteredDescription.replace(/.com/g, '')
 
     const handleShare = () => {
         if (navigator.share) {
             navigator.share({
                 title: `Interés en el trabajo: ${title}`,
-                text: `Mirá este trabajo: ${title}\n\nDescripcion:\n${filteredDescription}\n\nRequisitos:\n${requirements}\n\nPodes enviar tu cv a ${email}\n\nEncontra mas trabajos como este en:`,
+                text: `Mirá este trabajo: ${title}\n\nDescripcion:\n${reFilteredDescription}\n\nRequisitos:\n${requirements}\n\nPodes enviar tu cv a ${email}\n\nEncontra mas trabajos como este en:`,
                 url: window.location.href
             }).catch(console.error);
         } else {
