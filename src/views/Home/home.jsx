@@ -21,7 +21,7 @@ export const Home = () => {
             <div className="flex flex-row justify-between items-center pt-3 pl-3 pr-3 w-full">
                 <div className="flex items-center justify-start flex-grow">
                     {/* <img src="../public/yochambeo.svg" alt="logo" className="w-20 mr-2" /> */}
-                    <h1 className="text-3xl font-bold">YoChambeo</h1>
+                    <h1 className="text-3xl nunito">YoChambeo</h1>
                 </div>
                 <div>
                     <button onClick={publish} className="text-white border bg-black px-2 py-2 rounded-2xl font-bold">
