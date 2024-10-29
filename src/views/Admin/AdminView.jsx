@@ -1,9 +1,9 @@
-import { AdminPublish } from '../../components/adminpublish';
+import { NewPublish } from '../../components/newPublish';
 
 export const AdminView = () => {
     return (
         <div>
-            <AdminPublish />
+            <NewPublish/>
         </div>
     );
 };

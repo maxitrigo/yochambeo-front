@@ -27,7 +27,6 @@ export const Auth = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const { isLogged, token, isAdmin } = await userLogin(userData.email, userData.password);
-        console.log(token);
         if (isLogged) {
            dispatch(login({token, isAdmin}));
             navigate('/admin');
