@@ -45,6 +45,94 @@ export const NewPublish = () => {
 
 }, []);
 
+useEffect(() => {
+    const generateInstagramPreview = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 1080;
+        canvas.height = 1080;
+    
+        // Fondo negro
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+        // Estilos generales de texto
+        ctx.fillStyle = "#fff";
+        ctx.textAlign = "center";
+    
+        // Título con fuente más grande y moderna
+        ctx.font = "bold 70px 'Arial', sans-serif";
+        ctx.fillText("Se Busca", canvas.width / 2, 150);
+    
+        if (formData.title) {
+            ctx.font = "bold 50px 'Arial', sans-serif";
+            ctx.fillText(formData.title, canvas.width / 2, 230);
+        }
+    
+        // Línea divisoria
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(150, 270);
+        ctx.lineTo(930, 270);
+        ctx.stroke();
+    
+        // Requisitos y descripción
+        ctx.font = "30px 'Arial', sans-serif";
+        let yPosition = 320;
+        const maxLineWidth = 850;
+        let lineHeight = 40;
+        let text = formData.requirements || "";
+    
+        const words = text.split(' ');
+        let line = '';
+    
+        words.forEach((word) => {
+            const testLine = line + word + ' ';
+            const testWidth = ctx.measureText(testLine).width;
+    
+            if (testWidth > maxLineWidth && line !== '') {
+                ctx.fillText(line, canvas.width / 2, yPosition);
+                line = word + ' ';
+                yPosition += lineHeight;
+            } else {
+                line = testLine;
+            }
+        });
+    
+        ctx.fillText(line, canvas.width / 2, yPosition);
+        yPosition += lineHeight + 20;
+    
+        // Datos adicionales opcionales
+        ctx.font = "25px 'Arial', sans-serif";
+    
+        const details = [
+            formData.location ? `📍 Ubicación: ${formData.location}` : null,
+            formData.phone ? `📞 Teléfono: ${formData.phone}` : null,
+            formData.email ? `📧 Email: ${formData.email}` : null,
+            formData.website ? `🌐 Website: ${formData.website}` : null
+        ].filter(Boolean); // Filtra los valores null para que no se muestren
+    
+        details.forEach((detail) => {
+            ctx.fillText(detail, canvas.width / 2, yPosition);
+            yPosition += 50;
+        });
+    
+        // Crear imagen final
+        const newPreview = canvas.toDataURL("image/jpeg", 0.9);
+        setInstagramPreview(newPreview);
+    };
+    
+    
+    if (!instagramImage) {
+        generateInstagramPreview();
+    } else {
+        const newPreview = URL.createObjectURL(instagramImage);
+        setInstagramPreview(newPreview);
+    }
+
+}, [formData, instagramImage]);
+
     const inputData = [
         {
             label: "Posicion",
@@ -190,6 +278,14 @@ export const NewPublish = () => {
     
         if (instagramImage) {
             formDataWithFile.append('instagramImage', instagramImage); // Asegúrate de que instagramImage sea un archivo
+        } else {
+            const byteCharacters = atob(instagramPreview.split(',')[1]);
+            const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'image/jpeg' });
+            const file = new File([blob], 'instagramPreview.jpg', { type: 'image/jpeg' });
+
+            formDataWithFile.append('instagramImage', file);
         }
 
         //sin proceso de pago
