@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const API_URL = 'https://api.yochambeo.com';
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://api.yochambeo.com';
+// const API_URL = 'http://localhost:3000';
 
 export const getAllJobs = async (page = 1) => {
   const limit = 20; // O el número que desees
