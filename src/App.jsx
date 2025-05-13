@@ -9,6 +9,7 @@ import { AdminView } from './views/Admin/AdminView';
 import AdminPrivateRoute from './helpers/PrivateRoute';
 import { Register } from './views/Register/Register';
 import { CropImage } from './views/Cropper/Crop';
+import { Trades } from './views/Trades/Trades';
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/publish" element={<PublishJobView />} />
                     <Route path="/crop" element={<CropImage />} />
                     <Route path="/success" element={<Success />} />
+                    <Route path="/trades" element={<Trades />} />
                     <Route path="/admin" element={<AdminPrivateRoute><AdminView/></AdminPrivateRoute>}/>
                 </Routes>
 

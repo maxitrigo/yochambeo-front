@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createJobAdmin } from '../routes/jobRoutes';
 import { convertBase64ToFile } from '../utils/images';
+import { FiMapPin, FiPhone, FiMail, FiGlobe } from 'react-icons/fi'
+import { renderToStaticMarkup } from "react-dom/server"
 
 
 export const NewPublish = () => {
@@ -46,92 +48,103 @@ export const NewPublish = () => {
 }, []);
 
 useEffect(() => {
-    const generateInstagramPreview = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = 1080;
-        canvas.height = 1080;
-    
-        // Fondo negro
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-        // Estilos generales de texto
-        ctx.fillStyle = "#fff";
-        ctx.textAlign = "center";
-    
-        // Título con fuente más grande y moderna
-        ctx.font = "bold 70px 'Arial', sans-serif";
-        ctx.fillText("Se Busca", canvas.width / 2, 150);
-    
-        if (formData.title) {
-            ctx.font = "bold 50px 'Arial', sans-serif";
-            ctx.fillText(formData.title, canvas.width / 2, 230);
-        }
-    
-        // Línea divisoria
-        ctx.strokeStyle = "#fff";
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.moveTo(150, 270);
-        ctx.lineTo(930, 270);
-        ctx.stroke();
-    
-        // Requisitos y descripción
-        ctx.font = "30px 'Arial', sans-serif";
-        let yPosition = 320;
-        const maxLineWidth = 850;
-        let lineHeight = 40;
-        let text = formData.requirements || "";
-    
-        const words = text.split(' ');
-        let line = '';
-    
-        words.forEach((word) => {
-            const testLine = line + word + ' ';
-            const testWidth = ctx.measureText(testLine).width;
-    
-            if (testWidth > maxLineWidth && line !== '') {
-                ctx.fillText(line, canvas.width / 2, yPosition);
-                line = word + ' ';
-                yPosition += lineHeight;
-            } else {
-                line = testLine;
-            }
-        });
-    
-        ctx.fillText(line, canvas.width / 2, yPosition);
-        yPosition += lineHeight + 20;
-    
-        // Datos adicionales opcionales
-        ctx.font = "25px 'Arial', sans-serif";
-    
-        const details = [
-            formData.location ? `📍 Ubicación: ${formData.location}` : null,
-            formData.phone ? `📞 Teléfono: ${formData.phone}` : null,
-            formData.email ? `📧 Email: ${formData.email}` : null,
-            formData.website ? `🌐 Website: ${formData.website}` : null
-        ].filter(Boolean); // Filtra los valores null para que no se muestren
-    
-        details.forEach((detail) => {
-            ctx.fillText(detail, canvas.width / 2, yPosition);
-            yPosition += 50;
-        });
-    
-        // Crear imagen final
-        const newPreview = canvas.toDataURL("image/jpeg", 0.9);
-        setInstagramPreview(newPreview);
-    };
-    
-    
-    if (!instagramImage) {
-        generateInstagramPreview();
-    } else {
-        const newPreview = URL.createObjectURL(instagramImage);
-        setInstagramPreview(newPreview);
+    const svgToImage = (svgString) =>
+      new Promise(resolve => {
+        const img = new Image()
+        const blob = new Blob([svgString], { type: 'image/svg+xml' })
+        img.src = URL.createObjectURL(blob)
+        img.onload = () => { resolve(img); URL.revokeObjectURL(img.src) }
+      })
+  
+    const generateInstagramPreview = async () => {
+      const canvas = document.createElement("canvas")
+      const ctx    = canvas.getContext("2d")
+      canvas.width  = 1080
+      canvas.height = 1350
+  
+      // fondo blanco
+      ctx.fillStyle = "#FAFAFA"
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+  
+      // "Se busca"
+      ctx.fillStyle = "#000"
+      ctx.font      = "900 90px 'Nunito Sans', sans-serif"
+      ctx.textAlign = "left"
+      ctx.fillText("Busqueda Laboral", 40, 180)
+  
+      // título highlight
+      const title = formData.title || ""
+      ctx.font  = "900 70px 'Nunito Sans', sans-serif"
+      const textW  = ctx.measureText(title).width
+      const x      = (canvas.width - textW) / 2
+      const yTitle = 260
+      function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath()
+        ctx.moveTo(x + r, y)
+        ctx.lineTo(x + w - r, y)
+        ctx.arcTo(x + w, y, x + w, y + r, r)
+        ctx.lineTo(x + w, y + h - r)
+        ctx.arcTo(x + w, y + h, x + w - r, y + h, r)
+        ctx.lineTo(x + r, y + h)
+        ctx.arcTo(x, y + h, x, y + h - r, r)
+        ctx.lineTo(x, y + r)
+        ctx.arcTo(x, y, x + r, y, r)
+        ctx.closePath()
+        ctx.fill()
+      }
+      ctx.fillStyle = "#d9ff00"
+      roundRect(ctx, x - 30, yTitle - 80, textW + 30, 110, 20)
+      ctx.fillStyle = "#000"
+      ctx.fillText(title, canvas.width / canvas.width * 40, yTitle)
+  
+      // descripción
+      const paras = (formData.requirements||"").split("\n")
+      ctx.font      = "700 40px 'Nunito Sans', sans-serif"
+      ctx.fillStyle = "#000"
+      let yPos = yTitle + 100
+      paras.forEach(p => {
+        let line = ""
+        p.split(" ").forEach(w => {
+          const t = line + w + " "
+          if (ctx.measureText(t).width > 900) {
+            ctx.fillText(line.trim(), 40, yPos)
+            line = w + " "
+            yPos += 45
+          } else line = t
+        })
+        if (line) { ctx.fillText(line.trim(),40,yPos); yPos += 45 }
+        yPos += 20
+      })
+  
+      // detalles con imágenes de react-icons
+      const icons = [
+        { Comp: FiMapPin, text: formData.location },
+        { Comp: FiPhone,  text: formData.phone    },
+        { Comp: FiMail,   text: formData.email    },
+        { Comp: FiGlobe,  text: formData.website  }
+      ].filter(i => i.text)
+  
+      for (let { Comp, text } of icons) {
+        // render SVG -> Image
+        const svg = renderToStaticMarkup(<Comp size={32} color="#000" />)
+        const img = await svgToImage(svg)
+        // dibujar icono
+        const iconText = text || ""
+        ctx.font = "700 40px 'Nunito Sans', sans-serif"
+        const textWidth = ctx.measureText(iconText).width
+        const totalWidth = 32 + 10 + textWidth
+        const startX = (canvas.width - totalWidth) / 2
+        ctx.drawImage(img, startX, yPos - 24, 32, 32)
+        ctx.fillText(iconText, startX + 32 + 10, yPos)
+        yPos += 50
+      }
+  
+      setInstagramPreview(canvas.toDataURL("image/jpeg", 0.9))
     }
-
-}, [formData, instagramImage]);
+  
+    if (!instagramImage) generateInstagramPreview()
+    else setInstagramPreview(URL.createObjectURL(instagramImage))
+  }, [formData, instagramImage])
 
     const inputData = [
         {
