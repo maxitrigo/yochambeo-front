@@ -76,7 +76,7 @@ useEffect(() => {
       const title = formData.title || ""
       ctx.font  = "900 70px 'Nunito Sans', sans-serif"
       const textW  = ctx.measureText(title).width
-      const x      = (canvas.width - textW) / 2
+      const x = (canvas.width) / canvas.width * 50
       const yTitle = 260
       function roundRect(ctx, x, y, w, h, r) {
         ctx.beginPath()
