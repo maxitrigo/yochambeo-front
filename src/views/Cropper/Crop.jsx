@@ -82,7 +82,7 @@ export const CropImage = () => {
                     image={state?.image}
                     crop={crop}
                     zoom={zoom}
-                    aspect={1}
+                    aspect={4/5}
                     onCropChange={setCrop}
                     onCropComplete={onCropComplete}
                     onZoomChange={setZoom}
