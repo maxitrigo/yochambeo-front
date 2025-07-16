@@ -266,6 +266,7 @@ Contacto: Envíanos tu CV y pretensiones salariales a empleos@empresa.com o comu
                         value={formData.salary}
                         onChange={handleChange}
                         className="appearance-none border rounded-2xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required
                         
                     />
                 </div>
