@@ -90,13 +90,16 @@ export const PublishJob = () => {
             // Iniciar el proceso de pago
             const paymentResponse = await initiatePayment();
     
-            if (paymentResponse) {
-                // Redirigir al link de pago
-                location.assign(paymentResponse);
-            } else {
-                console.error('Error al procesar el pago');
-                localStorage.clear();
-            }
+            // if (paymentResponse) {
+            //     // Redirigir al link de pago
+            //     location.assign(paymentResponse);
+            // } else {
+            //     console.error('Error al procesar el pago');
+            //     localStorage.clear();
+            // }
+
+            //sin proceso de pago
+            navigate('/success?collection_status=approved')
 
         } catch (error) {
             console.error('Error al publicar el trabajo:', error);
