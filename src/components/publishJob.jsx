@@ -337,7 +337,7 @@ Vehículo propio (preferible).'
                 </div>
 
                 <div id="submit" className='flex flex-col items-center justify-center p-6'>
-                    <p className='text-gray-400 mb-4 text-center'>Las publicaciones tienen un costo de $100 c/u</p>
+                    {/* <p className='text-gray-400 mb-4 text-center'>Las publicaciones tienen un costo de $100 c/u</p> */}
                 <button
                     type="submit"
                     className="bg-black text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:shadow-outline transition-transform transform active:scale-95"
