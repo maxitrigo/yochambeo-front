@@ -31,6 +31,7 @@ export const createJob = async (formData, token) => {
             console.error('Error al configurar la solicitud:', error.message);
             alert('Error al enviar la solicitud.');
         }
+        throw error;
     }
 };
 
@@ -58,6 +59,7 @@ export const createJobAdmin = async (formData, token) => {
             console.error('Error al configurar la solicitud:', error.message);
             alert('Error al enviar la solicitud.');
         }
+        throw error;
     }
 };
 

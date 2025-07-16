@@ -38,5 +38,6 @@ export const sendFilesToCreateJob = async (token) => {
         console.log('Trabajo creado con éxito');
     } catch (error) {
         console.error('Error al crear el trabajo:', error);
+        throw error;
     }
 };
