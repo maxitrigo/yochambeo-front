@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const API_URL = 'https://api.yochambeo.com/auth';
-const API_URL = 'http://localhost:3000/auth';
+const API_URL = 'https://api.yochambeo.com/auth';
+// const API_URL = 'http://localhost:3000/auth';
 
 export const userRegister = async (email, password) => {
     try{
